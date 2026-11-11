@@ -1,0 +1,149 @@
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<aside
+  class="header-topbar spacing-style section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
+  style="{% render 'spacing-padding', settings: section.settings %}"
+>
+  <div class="header-topbar__list">
+    {% content_for 'blocks' %}
+  </div>
+</aside>
+
+{% stylesheet %}
+  .header-topbar__list {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs) var(--gap-xl);
+    min-width: 0;
+    color: var(--color-foreground);
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--xs);
+  }
+
+  /* Small screens: one row that scrolls sideways, nothing wraps */
+  @media screen and (max-width: 749px) {
+    .header-topbar__list {
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+    }
+
+    .header-topbar__list::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  /* From 750px: selling points left, shortcut links right.
+     The blocks set their own `order` (1 and 3), so the split does not depend on block order in the editor.
+     The pseudo-element sits between them and takes the free space. */
+  @media screen and (min-width: 750px) {
+    .header-topbar__list {
+      flex-wrap: wrap;
+    }
+
+    .header-topbar__list::before {
+      content: '';
+      order: 2;
+      margin-inline-start: auto;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.header_topbar",
+  "blocks": [
+    {
+      "type": "_usp-item"
+    },
+    {
+      "type": "_shortcut-link"
+    }
+  ],
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.section_width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "t:options.page"
+        },
+        {
+          "value": "full-width",
+          "label": "t:options.full"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "scheme-1",
+      "label": "t:settings.color_scheme"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.header_topbar",
+      "blocks": {
+        "usp_1": {
+          "type": "_usp-item",
+          "settings": {
+            "icon": "truck",
+            "text": "t:text_defaults.shipping"
+          }
+        },
+        "usp_2": {
+          "type": "_usp-item",
+          "settings": {
+            "icon": "return",
+            "text": "t:text_defaults.return_policy"
+          }
+        },
+        "usp_3": {
+          "type": "_usp-item",
+          "settings": {
+            "icon": "lock",
+            "text": "t:text_defaults.secure_payment"
+          }
+        }
+      },
+      "block_order": ["usp_1", "usp_2", "usp_3"]
+    }
+  ]
+}
+{% endschema %}

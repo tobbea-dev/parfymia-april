@@ -99,7 +99,7 @@
     endif
   endif
   capture search
-    render 'search', style: search_style, class: search_class, display_style: section.settings.actions_display_style
+    render 'search', style: search_style, class: search_class, display_style: section.settings.actions_display_style, search_display: section.settings.search_display
   endcapture
 
   # Skip drawer search under specific conditions:
@@ -1217,6 +1217,24 @@
       "id": "show_search",
       "label": "t:settings.search_icon",
       "default": true
+    },
+    {
+      "type": "select",
+      "id": "search_display",
+      "label": "t:settings.search_display",
+      "info": "t:info.search_display",
+      "options": [
+        {
+          "value": "icon",
+          "label": "t:options.icon"
+        },
+        {
+          "value": "field",
+          "label": "t:options.search_field"
+        }
+      ],
+      "default": "icon",
+      "visible_if": "{{ section.settings.show_search }}"
     },
     {
       "type": "select",

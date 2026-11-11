@@ -4,6 +4,7 @@
   @param {string} [style] - The style of the search action.
   @param {string} [class] - Additional classes for the search action.
   @param {string} [display_style] - The display style ('icon' or 'text').
+  @param {string} [search_display] - 'icon' (default) or 'field'.
 
   @example
   {% render 'search', style: 'default', class: 'custom-class', display_style: 'icon' %}
@@ -11,7 +12,7 @@
 
 {% unless style == 'none' %}
   <search-button
-    class="search-action{% if display_style == 'text' %} search-action--text{% endif %}{% if class != blank %} {{ class | strip }}{% endif %}"
+    class="search-action{% if display_style == 'text' %} search-action--text{% endif %}{% if search_display == 'field' %} search-action--field{% endif %}{% if class != blank %} {{ class | strip }}{% endif %}"
   >
     <button
       on:click="#search-modal/showDialog"
@@ -27,6 +28,16 @@
         {{ 'icon-search.svg' | inline_asset_content }}
       </span>
     </button>
+    {%- if search_display == 'field' -%}
+      <button type="button" class="button-unstyled search-action__field" on:click="#search-modal/showDialog" aria-label="{{ 'content.search_input_label' | t }}" aria-haspopup="dialog">
+        <span class="svg-wrapper search-action__field-icon">
+          {{- 'icon-search.svg' | inline_asset_content -}}
+        </span>
+        <span class="search-action__field-text">
+          {{- 'content.search_input_placeholder' | t -}}
+        </span>
+      </button>
+    {%- endif %}
   </search-button>
 {% endunless %}
 
@@ -72,6 +83,36 @@
     }
 
     [data-menu-style='menu'] .header__column--left .search-action--text {
+      margin-inline: 0;
+    }
+  }
+
+  /* Open search field (search_display: 'field').
+     Hidden by default: on mobile, in drawer mode, and before JS has set data-menu-style. */
+  .search-action .search-action__field {
+    display: none;
+  }
+
+  @media screen and (min-width: 750px) {
+    [data-menu-style='menu'] .search-action--field .search-action__field {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-xs);
+      height: var(--button-size-md);
+      min-width: calc(var(--button-size) * 4);
+      padding-inline: var(--padding-md);
+      border: var(--search-border-width) solid var(--color-border);
+      border-radius: var(--search-border-radius);
+      color: var(--color-foreground);
+      cursor: pointer;
+    }
+
+    [data-menu-style='menu'] .search-action--field .header-actions__action {
+      display: none;
+    }
+
+    [data-menu-style='menu'] .header__column--right .search-action--field,
+    [data-menu-style='menu'] .header__column--left .search-action--field {
       margin-inline: 0;
     }
   }

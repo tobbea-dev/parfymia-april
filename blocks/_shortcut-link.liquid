@@ -1,0 +1,78 @@
+{%- liquid
+  assign shortcut_text = block.settings.text | strip
+  assign shortcut_class = 'header-topbar__shortcut'
+
+  if block.settings.highlight
+    assign shortcut_class = shortcut_class | append: ' header-topbar__shortcut--highlight'
+  endif
+-%}
+
+{%- if shortcut_text != blank -%}
+  {%- if block.settings.link != blank -%}
+    <a
+      href="{{ block.settings.link }}"
+      class="{{ shortcut_class }} header-topbar__shortcut--link"
+      {{ block.shopify_attributes }}
+    >
+      {{- shortcut_text | escape -}}
+    </a>
+  {%- else -%}
+    <span
+      class="{{ shortcut_class }}"
+      {{ block.shopify_attributes }}
+    >
+      {{- shortcut_text | escape -}}
+    </span>
+  {%- endif -%}
+{%- endif -%}
+
+{% stylesheet %}
+  .header-topbar__shortcut {
+    /* Shortcut links sit after the selling points, whatever the block order is */
+    order: 3;
+    flex-shrink: 0;
+    color: var(--color-foreground);
+    text-decoration: none;
+  }
+
+  .header-topbar__shortcut--link:hover {
+    text-decoration: underline;
+    text-underline-offset: var(--padding-2xs);
+  }
+
+  .header-topbar__shortcut--highlight {
+    text-decoration: underline;
+    text-underline-offset: var(--padding-2xs);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.shortcut_link",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "t:settings.text",
+      "default": "t:text_defaults.learn_more"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "t:settings.link"
+    },
+    {
+      "type": "checkbox",
+      "id": "highlight",
+      "label": "t:settings.highlight",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.shortcut_link"
+    }
+  ]
+}
+{% endschema %}
