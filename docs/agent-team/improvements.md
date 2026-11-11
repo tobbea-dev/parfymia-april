@@ -14,3 +14,4 @@ Så ändras teamets arbetssätt. Temakod hör inte hit.
 
 | Version | Datum | Fel som observerades | Ändring | Före | Efter | Beslut |
 |---|---|---|---|---|---|---|
+| v1 (baslinje) | 2026-11-11 | Inget. Första mätningen | Ingen | | `seeded-review-01`: 9 av 9 fel fångade, 0 omförsök, 2 agenter | Baslinje. Se `runs/2026-11-11-pilot-01.md` |
