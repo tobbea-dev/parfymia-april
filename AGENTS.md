@@ -78,7 +78,8 @@ Aldrig commit direkt till `main` eller `prod`. Alltid PR.
 ## Agentteam och verifiering
 
 - **Verifiering:** `bash scripts/verify.sh` (JSON, paritet mellan `sv` och `en`, theme-check när Shopify CLI finns). Samma kommando körs i CI på varje PR.
-- **Agentteam:** `/agent-team <mål>` kör planering, implementation, test, oberoende granskning och dokumentation. Sju agenter finns i `.claude/agents/`, alla 30 rollkontrakt i `docs/agent-team/roles.md`.
+- **Mål:** ligger som ärenden i Linear-teamet Goal (`GOA`). Teamet flyttar status till In Progress och In Review. Done sätts när PR:en är mergad.
+- **Agentteam:** `/agent-team GOA-<nr>` kör planering, implementation, test, oberoende granskning och dokumentation. Sju agenter finns i `.claude/agents/`, alla 30 rollkontrakt i `docs/agent-team/roles.md`.
 - **Autonomi:** Supervised. Teamet arbetar på feature-branch och öppnar draft-PR. Merge och all push till butik godkänns av en människa.
 - **Minne och loggar:** `docs/agent-team/` (baslinje, minne, körningar, referensuppgifter, förbättringslogg).
 - **Rör inte utan godkännande:** `scripts/`, `.theme-check.yml`, `.claude/settings.json`. Det är utvärderingsregler och spärrar.
