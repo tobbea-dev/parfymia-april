@@ -96,7 +96,7 @@ Aldrig commit direkt till `main` eller `prod`. Alltid PR.
 
 - ✅ Initial baseline från Horizon-export importerad (commit `9a78eff`)
 - ✅ Agent-setup: regler, hooks, permissions, kontroller, CI, kunskapsbas (se `docs/decisions/0001-claude-setup.md`)
-- ⬜ Brand-anpassning av färger, typsnitt, logo
+- 🟡 Brand-anpassning: färger och rubriktypsnitt klara (se `DESIGN.md`, `docs/decisions/0002-brand-farger-och-typsnitt.md`). Kvar: inverterad logo, verifiering på dev-storen
 - ⬜ Header-redesign för Parfymia
 - ⬜ Hero/landing
 - ⬜ Kategorinavigation (parfym → dam/herr/nisch, hår, hud, makeup …)
