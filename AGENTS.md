@@ -17,7 +17,7 @@ Basen är **Shopify Horizon-temat** (Online Store 2.0). Vi anpassar gradvis utan
 ## Stores
 
 - **Dev**: `dev-parfymia.myshopify.com` — fri lekplats, pusha hit gärna
-- **Prod**: `www.parfymia.com` — *aldrig* direkt-push, alltid via `prod`-branch och backup först
+- **Prod**: `www.parfymia.com` (myshopify-adress: `6m05q1-6x.myshopify.com`) — *aldrig* direkt-push, alltid via `prod`-branch och backup först
 
 ## Hur man kör
 
