@@ -66,7 +66,7 @@ Den kontrollerar JSON-syntax, att `sv` och `en` har samma översättningsnycklar
 - För stora bilder (hero, kategoribanner) — låt theme-editorn äga dem som `image_picker`-settings istället för att lägga in i `assets/`.
 
 ### Översättningar
-- Primärspråk: **svenska (sv)**. Sekundär: engelska (en).
+- Primärspråk: **engelska (en)** — `locales/en.default.json` är temats standardfil. Sekundär: svenska (sv).
 - Alla nya strängar ska in i båda `locales/sv.json` och `locales/en.default.json`.
 
 ## Branch-strategi
@@ -101,6 +101,6 @@ Aldrig commit direkt till `main` eller `prod`. Alltid PR.
 - ⬜ Hero/landing
 - ⬜ Kategorinavigation (parfym → dam/herr/nisch, hår, hud, makeup …)
 - ⬜ Produktsida-anpassningar (notes/topnoter/baser för parfym, ingredienser för hudvård etc.)
-- ⬜ Översättning till svenska som primärspråk
+- ⬜ Språk: engelska som primärspråk, svenska som sekundärt — granska svenska översättningen och välj vilka övriga språk som ska vara kvar
 
 (Uppdatera den här listan när uppgifter slutförs.)
