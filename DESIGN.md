@@ -6,13 +6,14 @@ Värdena under **Nuläge** är utlästa ur `config/settings_data.json` (Horizon-
 
 ## Riktning — Parfymia
 
-> ⬜ Inte bestämt än. Fylls i under "Brand-anpassning" (se AGENTS.md → Aktuell status).
+> 🟡 Delvis bestämt 2026-11-11 (GOA-2). Färg, typsnitt och logo är beslutade. Övriga rader är öppna.
 
 - **Känsla:** _t.ex. tre adjektiv_
 - **Målgrupp:** _vem handlar, vad jämför de med_
 - **Referenser:** _butiker/varumärken vi vill likna och inte likna_
-- **Primärfärg / accent:** _
-- **Typsnitt rubrik / brödtext:** _
+- **Primärfärg / accent:** svartvitt behålls. Ingen varumärkesfärg läggs till nu.
+- **Typsnitt rubrik / brödtext:** serif i rubriker, Inter kvar i brödtext och underrubriker. Exakt serif väljs i theme editor (Temainställningar → Typografi → rubriktypsnitt). Inte vald än.
+- **Logotyp:** behålls som den är.
 - **Bildspråk:** _produkt på vit botten, livsstil, närbilder …_
 - **Ton i text:** _du-tilltal? saklig, lekfull, exklusiv?_
 
