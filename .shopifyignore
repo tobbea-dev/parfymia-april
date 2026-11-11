@@ -1,0 +1,8 @@
+# Hör till repot, inte till temat. Ska aldrig laddas upp till butiken.
+.claude/
+.github/
+docs/
+scripts/
+AGENTS.md
+README.md
+.theme-check.yml

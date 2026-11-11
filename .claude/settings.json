@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(shopify theme push*parfymia.com*)",
+      "Bash(shopify theme publish*)",
+      "Bash(shopify theme delete*)",
+      "Bash(git push*origin main*)",
+      "Bash(git push*origin prod*)",
+      "Edit(config/settings_data.json)",
+      "Write(config/settings_data.json)"
+    ],
+    "ask": [
+      "Bash(shopify theme push*)",
+      "Bash(shopify theme pull*)"
+    ]
+  }
+}
