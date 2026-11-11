@@ -11,7 +11,7 @@ Mätt på orörd Horizon-import (commit `4d7f676`), 2026-11-11, innan agentteame
 | Paritet `sv.schema.json` mot `en.default.schema.json` | 0 nycklar saknas |
 | Theme-check (Shopify CLI 5.0.1, `theme-check:recommended`) | 307 filer, 0 fel, 28 varningar |
 
-Paritetsluckor som godtas står i `scripts/verify-baseline.json` (tom i dag). Nya luckor ger fel.
+Godtagna paritetsluckor kan läggas i `scripts/locale-baseline.json`. Filen finns inte i dag eftersom inga luckor finns. Nya luckor ger fel.
 
 ## Ärvda theme-check-varningar
 

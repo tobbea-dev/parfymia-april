@@ -1,3 +1,7 @@
+# Shopify theme-check — körs via scripts/verify.sh (lokalt, Stop-hook, CI).
+#
+# Gräns: fel fäller kontrollen (--fail-level error), varningar gör det inte.
+# Baslinje från Horizon-exporten (28 apr 2026): 0 fel, 28 varningar
+# (UnusedDocParam, ValidScopedCSSClass m.fl. i orörd Horizon-kod).
+# Rätta varningar i filer du ändå rör; stäng inte av checks här utan diskussion.
 extends: theme-check:recommended
-ignore:
-  - node_modules/**

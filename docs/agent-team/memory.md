@@ -4,7 +4,7 @@ Bara verifierade beslut och fakta, med hänvisning till bevis. Antaganden och pl
 
 | Datum | Fakta eller beslut | Bevis |
 |---|---|---|
-| 2026-11-11 | Shopifys locale-filer är JSON med kommentarer och avslutande kommatecken. Vanlig `json.loads` fallerar på `en.default.json`. Använd `load()` i `scripts/verify.py`. | `scripts/verify.py`, `baseline.md` |
+| 2026-11-11 | Shopifys locale-filer är JSON med kommentarer och avslutande kommatecken. Vanlig `json.loads` fallerar på `en.default.json`. Använd `readJsonc` i `scripts/lib/jsonc.mjs`. | `scripts/lib/jsonc.mjs`, `baseline.md` |
 | 2026-11-11 | `sv.json` och `sv.schema.json` har redan alla nycklar som de engelska filerna har. | `baseline.md` |
 | 2026-11-11 | Orörd Horizon ger 0 fel och 28 varningar i theme-check. | `baseline.md` |
 | 2026-11-11 | Shopify CLI finns inte i molnmiljön. Theme-check körs i CI, lokalt ger `verify.sh` en SKIP-rad. | `scripts/verify.sh`, `.github/workflows/theme-check.yml` |
@@ -12,3 +12,4 @@ Bara verifierade beslut och fakta, med hänvisning till bevis. Antaganden och pl
 | 2026-11-11 | `UnusedDocParam` i `snippets/divider.liquid` är falsklarm. Rätta inte. | `runs/2026-11-11-pilot-01.md` |
 | 2026-11-11 | Granskare och säkerhetsagent fångar 9 av 9 fel i `benchmarks/seeded-review-01.diff`. | `runs/2026-11-11-pilot-01.md` |
 | 2026-11-11 | Mål spåras i Linear-teamet Goal (`GOA`). GOA-1 är agentteamets infrastruktur, GOA-2 till GOA-7 är de öppna punkterna i `AGENTS.md`. | Linear GOA, `.claude/skills/agent-team/SKILL.md` |
+| 2026-11-11 | Verifiering och spärrar kommer från PR #1 på `main` (`scripts/verify.sh` med `check-json.mjs` och `check-locales.mjs`, hooks i `.claude/hooks/`). Agentteamets egna dubbletter togs bort vid sammanslagningen. | `docs/decisions/0001-claude-setup.md`, merge-commit på PR #2 |

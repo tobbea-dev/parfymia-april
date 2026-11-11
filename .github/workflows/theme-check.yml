@@ -1,9 +1,9 @@
-name: Verify theme
+name: Theme check
 
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, prod]
 
 permissions:
   contents: read
@@ -11,15 +11,13 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      # Installeras bara i CI-jobbet. Temat självt förblir build-fritt.
-      - name: Install Shopify CLI
-        run: npm install -g @shopify/cli@5.0.1
-      - name: Run verification
-        run: bash scripts/verify.sh
-        env:
-          SHOPIFY_CLI_NO_ANALYTICS: "1"
+      - name: Installera Shopify CLI
+        run: npm install -g @shopify/cli@latest
+      - name: Verifiera tema
+        run: scripts/verify.sh

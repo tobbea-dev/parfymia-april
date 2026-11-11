@@ -5,4 +5,8 @@ docs/
 scripts/
 AGENTS.md
 README.md
+CLAUDE.md
+DESIGN.md
+HANDOFF.md
+.mcp.json
 .theme-check.yml

@@ -28,6 +28,23 @@ shopify theme push --store=dev-parfymia.myshopify.com --unpublished --theme="Par
 shopify theme pull --store=dev-parfymia.myshopify.com --theme="Parfymia WIP"
 ```
 
+## Verifiering
+
+Kör innan du säger att något är klart, och innan PR:
+```bash
+scripts/verify.sh
+```
+Den kontrollerar JSON-syntax, att `sv` och `en` har samma översättningsnycklar, och kör `shopify theme check` (fel fäller, varningar visas). Samma skript körs i GitHub Actions på varje PR.
+
+## Kunskapsbas
+
+| Fil | Innehåll |
+|---|---|
+| `DESIGN.md` | Färgscheman, typografi, hörnradier — nuläge och Parfymias riktning |
+| `HANDOFF.md` | Var senaste sessionen slutade, nästa steg, öppna frågor |
+| `docs/decisions/` | Beslut och varför de togs |
+| `.claude/` | Skills, hooks och permissions för Claude Code |
+
 ## Konventioner
 
 ### Liquid
@@ -75,19 +92,19 @@ Aldrig commit direkt till `main` eller `prod`. Alltid PR.
 - Lägga till nya npm-deps eller build-steg utan diskussion — temat är medvetet build-fritt
 - Ändra `config/settings_data.json` manuellt — det filet uppdateras av theme editor och konflikter blir röriga
 
-## Agentteam och verifiering
+## Agentteam
 
-- **Verifiering:** `bash scripts/verify.sh` (JSON, paritet mellan `sv` och `en`, theme-check när Shopify CLI finns). Samma kommando körs i CI på varje PR.
 - **Mål:** ligger som ärenden i Linear-teamet Goal (`GOA`). Teamet flyttar status till In Progress och In Review. Done sätts när PR:en är mergad.
 - **Agentteam:** `/agent-team GOA-<nr>` kör planering, implementation, test, oberoende granskning och dokumentation. Sju agenter finns i `.claude/agents/`, alla 30 rollkontrakt i `docs/agent-team/roles.md`.
 - **Autonomi:** Supervised. Teamet arbetar på feature-branch och öppnar draft-PR. Merge och all push till butik godkänns av en människa.
 - **Minne och loggar:** `docs/agent-team/` (baslinje, minne, körningar, referensuppgifter, förbättringslogg).
-- **Rör inte utan godkännande:** `scripts/`, `.theme-check.yml`, `.claude/settings.json`. Det är utvärderingsregler och spärrar.
+- **Rör inte utan godkännande:** `scripts/`, `.theme-check.yml`, `.claude/settings.json`, `.claude/hooks/`. Det är utvärderingsregler och spärrar.
 
 ## Aktuell status
 
 - ✅ Initial baseline från Horizon-export importerad (commit `9a78eff`)
-- ✅ Agentteam, verifiering och CI uppsatt (se `docs/agent-team/`)
+- ✅ Agent-setup: regler, hooks, permissions, kontroller, CI, kunskapsbas (se `docs/decisions/0001-claude-setup.md`)
+- ✅ Agentteam: sju agenter, `/agent-team`, rollkatalog och mål-kö i Linear (se `docs/agent-team/`)
 - ⬜ Brand-anpassning av färger, typsnitt, logo
 - ⬜ Header-redesign för Parfymia
 - ⬜ Hero/landing
