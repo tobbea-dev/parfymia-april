@@ -28,6 +28,23 @@ shopify theme push --store=dev-parfymia.myshopify.com --unpublished --theme="Par
 shopify theme pull --store=dev-parfymia.myshopify.com --theme="Parfymia WIP"
 ```
 
+## Verifiering
+
+Kör innan du säger att något är klart, och innan PR:
+```bash
+scripts/verify.sh
+```
+Den kontrollerar JSON-syntax, att `sv` och `en` har samma översättningsnycklar, och kör `shopify theme check` (fel fäller, varningar visas). Samma skript körs i GitHub Actions på varje PR.
+
+## Kunskapsbas
+
+| Fil | Innehåll |
+|---|---|
+| `DESIGN.md` | Färgscheman, typografi, hörnradier — nuläge och Parfymias riktning |
+| `HANDOFF.md` | Var senaste sessionen slutade, nästa steg, öppna frågor |
+| `docs/decisions/` | Beslut och varför de togs |
+| `.claude/` | Skills, hooks och permissions för Claude Code |
+
 ## Konventioner
 
 ### Liquid
@@ -78,6 +95,7 @@ Aldrig commit direkt till `main` eller `prod`. Alltid PR.
 ## Aktuell status
 
 - ✅ Initial baseline från Horizon-export importerad (commit `9a78eff`)
+- ✅ Agent-setup: regler, hooks, permissions, kontroller, CI, kunskapsbas (se `docs/decisions/0001-claude-setup.md`)
 - ⬜ Brand-anpassning av färger, typsnitt, logo
 - ⬜ Header-redesign för Parfymia
 - ⬜ Hero/landing
