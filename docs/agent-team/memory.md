@@ -21,3 +21,4 @@ Bara verifierade beslut och fakta, med hänvisning till bevis. Antaganden och pl
 | 2026-11-12 | Shopify-kopplingen i Claude (`mcp__Shopify__*`) ska inte användas, inte ens för att läsa. Bara Shopify AI Toolkit och Shopify CLI. | `docs/decisions/0002-shopify-ai-toolkit-och-cli.md` |
 | 2026-11-12 | I molnmiljön måste Shopify CLI köras med `NODE_USE_ENV_PROXY=1` för att gå via proxyn. Utan den: `getaddrinfo ENOTFOUND`. | Körning i sessionen, `HANDOFF.md` |
 | 2026-11-12 | `6m05q1-6x.myshopify.com` leder till `lilixa.store` (Lilixa). Borttagen ur miljöns nätverkslista. `dev-parfymia.myshopify.com` är en lösenordsskyddad butik. | `curl -I` i sessionen, `HANDOFF.md` |
+| 2026-11-12 | Dev-butikens permanenta adress är `devparfymia.myshopify.com`. Theme Access-lösenord fungerar bara med den; `dev-parfymia.myshopify.com` ger 401. | `shopify theme list` i sessionen, `HANDOFF.md` |

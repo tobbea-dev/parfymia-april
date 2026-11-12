@@ -17,6 +17,7 @@ Basen är **Shopify Horizon-temat** (Online Store 2.0). Vi anpassar gradvis utan
 ## Stores
 
 - **Dev**: `dev-parfymia.myshopify.com` — fri lekplats, pusha hit gärna
+  - Permanent adress för Shopify CLI med Theme Access-lösenord: `devparfymia.myshopify.com` (utan bindestreck). `dev-parfymia` fungerar i webbläsaren men avvisas av CLI.
 - **Prod**: `www.parfymia.com` — *aldrig* direkt-push, alltid via `prod`-branch och backup först
 
 ## Hur man kör
