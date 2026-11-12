@@ -4,7 +4,7 @@
 
 ## Senast (2026-11-12)
 
-**GOA-3 Header-redesign: koden är klar och granskad, inget är kontrollerat i en butik.**
+**GOA-3 Header-redesign: koden är klar, granskad och uppladdad till dev-butiken som opublicerat tema. Ingen har ännu tittat på den i butiken.**
 
 - Ny sektion `sections/header-topbar.liquid` för header-gruppen, med blocken `_usp-item` (ikon, text, valfri länk) och `_shortcut-link` (text, länk, framhäv).
 - Ny inställning i headern, "Sökvisning på dator": ikon (standard) eller fält. Fältet är en knapp som öppnar den befintliga sökmodalen.
@@ -25,6 +25,7 @@ Sedan tidigare: agentteamet (sju agenter, `/agent-team`, Linear-teamet Goal), oc
 
 ## Öppna frågor / väntar på människa
 
+- **GOA-3 är uppladdad till dev-butiken (2026-11-12)** som opublicerat tema `Parfymia GOA-3`, id `162800009301`, med ägarens godkännande. Inget befintligt tema ändrades och inget publicerades. Editor: `https://devparfymia.myshopify.com/admin/themes/162800009301/editor`. Förhandsvisning: `https://devparfymia.myshopify.com?preview_theme_id=162800009301`. Uppdatera samma tema med `--theme 162800009301`, skapa inte ett nytt.
 - **GOA-3, i theme editor:** logo i mitten, meny på nedre raden och i mitten, sökvisning "fält", lägg till toppfältet ovanför headern, fyll i USP:ar, genvägar och meddelandetext. Kontrollera mobil och dator.
 - **Butiker (kontrollerat 2026-11-12 från molnsessionen):**
   - `dev-parfymia.myshopify.com` svarar och leder till en lösenordssida. Det är dev-butiken enligt `AGENTS.md`. Förhandsvisning av GOA-3 görs här, som opublicerat tema och efter ägarens godkännande.
