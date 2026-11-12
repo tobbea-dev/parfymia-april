@@ -28,7 +28,7 @@ Sedan tidigare: agentteamet (sju agenter, `/agent-team`, Linear-teamet Goal), oc
 - **GOA-3, i theme editor:** logo i mitten, meny på nedre raden och i mitten, sökvisning "fält", lägg till toppfältet ovanför headern, fyll i USP:ar, genvägar och meddelandetext. Kontrollera mobil och dator.
 - **Butiker (kontrollerat 2026-11-12 från molnsessionen):**
   - `dev-parfymia.myshopify.com` svarar och leder till en lösenordssida. Det är dev-butiken enligt `AGENTS.md`. Förhandsvisning av GOA-3 görs här, som opublicerat tema och efter ägarens godkännande.
-  - `6m05q1-6x.myshopify.com` leder vidare till `lilixa.store`. Det är Lilixas butik, inte Parfymias. **Pusha inte Parfymia-temat dit.** Adressen ligger kvar i miljöns nätverkslista tills ägaren tar bort den.
+  - `6m05q1-6x.myshopify.com` leder vidare till `lilixa.store`. Det är Lilixas butik, inte Parfymias. **Pusha inte Parfymia-temat dit.** Adressen togs bort ur miljöns nätverkslista 2026-11-12 på ägarens begäran.
   - `ikw71x-m0.myshopify.com` uppges vara Parfymias butik. Dev eller live är inte klarlagt, och den ligger inte i miljöns nätverkslista.
   - `kpm6zp-2n.myshopify.com` ska inte användas (ägarens beslut 2026-11-12).
 - **Inloggning saknas fortfarande.** Sessionen kör nu i miljön "parfymia-april" och når `dev-parfymia`, `shopify.dev`, `cdn.shopify.com` och `theme-kit-access.shopifyapps.com`. Shopify CLI behöver en Theme Access-token för dev-butiken, sparad som hemlighet i miljön.
