@@ -26,7 +26,11 @@ Sedan tidigare: agentteamet (sju agenter, `/agent-team`, Linear-teamet Goal), oc
 ## Öppna frågor / väntar på människa
 
 - **GOA-3, i theme editor:** logo i mitten, meny på nedre raden och i mitten, sökvisning "fält", lägg till toppfältet ovanför headern, fyll i USP:ar, genvägar och meddelandetext. Kontrollera mobil och dator.
-- **Butik för förhandsvisning:** `6m05q1-6x.myshopify.com` angavs för GOA-3 och har inte använts än: molnmiljön når den inte och har ingen inloggning. `kpm6zp-2n.myshopify.com` **ska inte användas** (beslut av ägaren 2026-11-12); den hör till ett annat projekt.
+- **Butik för förhandsvisning är inte avgjord. Pusha inte förrän den är det.**
+  - `6m05q1-6x.myshopify.com` angavs först för GOA-3. Enligt en senare uppgift från ägaren är det Lilixas butik, inte Parfymias.
+  - `ikw71x-m0.myshopify.com` är enligt samma uppgift Parfymias butik. Om den är dev eller live är inte klarlagt, och spärren i `.claude/hooks/guard-bash.mjs` känner bara igen `parfymia.com`.
+  - `kpm6zp-2n.myshopify.com` ska inte användas (ägarens beslut 2026-11-12).
+  - Butikslistan gick inte att läsa härifrån: Shopify-kopplingen kräver ny inloggning, och Shopify CLI har ingen inloggning i molnmiljön.
 - **GOA-2:** välj serif för rubriker i theme editor.
 
 - Agentteamet har inte kört ett riktigt mål än. `planner`, `theme-developer`, `i18n` och `docs-writer` är oprovade, och ingen förbättringsiteration är gjord.
