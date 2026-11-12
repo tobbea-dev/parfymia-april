@@ -5,13 +5,26 @@
 
 {%- if usp_text != blank or usp_icon != 'none' -%}
   {%- capture usp_content -%}
-    {%- render 'icon-or-image', icon: usp_icon, image_upload: block.settings.image_upload, width: 16, class_name: 'header-topbar__usp-icon' -%}
+    {%- if usp_icon != 'none' -%}
+      <svg
+        class="header-topbar__usp-icon icon-default"
+        aria-hidden="true"
+        focusable="false"
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 20 20"
+      >
+        {%- render 'icon', icon: usp_icon -%}
+      </svg>
+    {%- endif -%}
     {%- if usp_text != blank -%}
       <span class="header-topbar__usp-text">{{ usp_text | escape }}</span>
     {%- endif -%}
   {%- endcapture -%}
 
-  {%- if block.settings.link != blank -%}
+  {%- comment -%} Only link when there is visible text: an icon-only link has no accessible name. {%- endcomment -%}
+  {%- if block.settings.link != blank and usp_text != blank -%}
     <a
       href="{{ block.settings.link }}"
       class="header-topbar__usp header-topbar__usp--link"
@@ -305,7 +318,8 @@
     {
       "type": "text",
       "id": "text",
-      "label": "t:settings.text"
+      "label": "t:settings.text",
+      "default": "t:text_defaults.shipping"
     },
     {
       "type": "url",

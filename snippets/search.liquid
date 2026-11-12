@@ -29,7 +29,7 @@
       </span>
     </button>
     {%- if search_display == 'field' -%}
-      <button type="button" class="button-unstyled search-action__field" on:click="#search-modal/showDialog" aria-label="{{ 'content.search_input_label' | t }}" aria-haspopup="dialog">
+      <button type="button" class="button-unstyled search-action__field" on:click="#search-modal/showDialog" aria-haspopup="dialog">
         <span class="svg-wrapper search-action__field-icon">
           {{- 'icon-search.svg' | inline_asset_content -}}
         </span>

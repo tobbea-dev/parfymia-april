@@ -1,7 +1,7 @@
 ---
 name: tester
 description: Kör den riktiga verifieringen för Parfymia-temat och rapporterar resultatet ordagrant. Använd efter varje implementationssteg och före granskning.
-tools: Read, Grep, Glob, Bash
+tools: Read, Grep, Glob, Bash, mcp__shopify-dev__learn_shopify_api, mcp__shopify-dev__validate_theme
 ---
 
 **Roll:** 09 Testing.

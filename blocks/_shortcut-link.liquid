@@ -1,6 +1,6 @@
 {%- liquid
   assign shortcut_text = block.settings.text | strip
-  assign shortcut_class = 'header-topbar__shortcut'
+  assign shortcut_class = 'header-topbar__shortcut header-topbar__shortcut--link'
 
   if block.settings.highlight
     assign shortcut_class = shortcut_class | append: ' header-topbar__shortcut--highlight'
@@ -11,14 +11,18 @@
   {%- if block.settings.link != blank -%}
     <a
       href="{{ block.settings.link }}"
-      class="{{ shortcut_class }} header-topbar__shortcut--link"
+      class="{{ shortcut_class }}"
       {{ block.shopify_attributes }}
     >
       {{- shortcut_text | escape -}}
     </a>
-  {%- else -%}
+  {%- elsif request.design_mode -%}
+    {%- comment -%}
+      No link: nothing on the storefront. In the theme editor the block stays visible
+      as plain text (never highlighted) so the merchant can select it and add the link.
+    {%- endcomment -%}
     <span
-      class="{{ shortcut_class }}"
+      class="header-topbar__shortcut"
       {{ block.shopify_attributes }}
     >
       {{- shortcut_text | escape -}}
@@ -40,7 +44,7 @@
     text-underline-offset: var(--padding-2xs);
   }
 
-  .header-topbar__shortcut--highlight {
+  .header-topbar__shortcut--link.header-topbar__shortcut--highlight {
     text-decoration: underline;
     text-underline-offset: var(--padding-2xs);
   }

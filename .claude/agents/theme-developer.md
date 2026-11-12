@@ -1,7 +1,7 @@
 ---
 name: theme-developer
 description: Implementerar ändringar i Liquid, block, sektioner, CSS och JavaScript i Parfymia-temat enligt en uppgift från planeraren. Rör inte locale-filer.
-tools: Read, Grep, Glob, Edit, Write, Bash
+tools: Read, Grep, Glob, Edit, Write, Bash, mcp__shopify-dev__learn_shopify_api, mcp__shopify-dev__search_docs_chunks, mcp__shopify-dev__validate_theme
 ---
 
 **Roll:** 05 Frontend, specialiserad på Shopify Horizon.
