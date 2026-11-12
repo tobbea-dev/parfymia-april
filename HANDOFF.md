@@ -31,7 +31,8 @@ Sedan tidigare: agentteamet (sju agenter, `/agent-team`, Linear-teamet Goal), oc
   - `6m05q1-6x.myshopify.com` leder vidare till `lilixa.store`. Det är Lilixas butik, inte Parfymias. **Pusha inte Parfymia-temat dit.** Adressen togs bort ur miljöns nätverkslista 2026-11-12 på ägarens begäran.
   - `ikw71x-m0.myshopify.com` uppges vara Parfymias butik. Dev eller live är inte klarlagt, och den ligger inte i miljöns nätverkslista.
   - `kpm6zp-2n.myshopify.com` ska inte användas (ägarens beslut 2026-11-12).
-- **Inloggning saknas fortfarande.** Sessionen kör nu i miljön "parfymia-april" och når `dev-parfymia`, `shopify.dev`, `cdn.shopify.com` och `theme-kit-access.shopifyapps.com`. Shopify CLI behöver en Theme Access-token för dev-butiken, sparad som hemlighet i miljön.
+- **Inloggning fungerar inte än (2026-11-12).** En Theme Access-hemlighet är sparad i miljön "parfymia-april" för `theme-kit-access.shopifyapps.com`, men tjänsten svarar 401 för `dev-parfymia.myshopify.com`. Troligast är lösenordet skapat i en annan butik, eller så är `dev-parfymia` inte butikens permanenta adress. Ägaren behöver kontrollera det i Theme Access-appen och under Inställningar → Domäner.
+- **Shopify CLI i molnet går förbi proxyn som standard.** Kör kommandon med `NODE_USE_ENV_PROXY=1`, annars blir det `ENOTFOUND`. Lösenordet injiceras av proxyn; ge `--password` ett platshållarvärde som börjar med `shptka_`.
 - **GOA-2:** välj serif för rubriker i theme editor.
 
 - Agentteamet har inte kört ett riktigt mål än. `planner`, `theme-developer`, `i18n` och `docs-writer` är oprovade, och ingen förbättringsiteration är gjord.

@@ -19,3 +19,5 @@ Bara verifierade beslut och fakta, med hänvisning till bevis. Antaganden och pl
 | 2026-11-12 | Butiken `kpm6zp-2n.myshopify.com` ska inte användas för Parfymia. Den hör till ett annat projekt. | Ägarens besked i sessionen, `HANDOFF.md` |
 | 2026-11-12 | Butiksadresserna är inte klarlagda: `6m05q1-6x` uppges vara Lilixa, `ikw71x-m0` uppges vara Parfymia (dev eller live okänt). Pusha inte till någon av dem utan ägarens uttryckliga besked. | Ägarens uppgift i sessionen, inte verifierad mot Shopify |
 | 2026-11-12 | Shopify-kopplingen i Claude (`mcp__Shopify__*`) ska inte användas, inte ens för att läsa. Bara Shopify AI Toolkit och Shopify CLI. | `docs/decisions/0002-shopify-ai-toolkit-och-cli.md` |
+| 2026-11-12 | I molnmiljön måste Shopify CLI köras med `NODE_USE_ENV_PROXY=1` för att gå via proxyn. Utan den: `getaddrinfo ENOTFOUND`. | Körning i sessionen, `HANDOFF.md` |
+| 2026-11-12 | `6m05q1-6x.myshopify.com` leder till `lilixa.store` (Lilixa). Borttagen ur miljöns nätverkslista. `dev-parfymia.myshopify.com` är en lösenordsskyddad butik. | `curl -I` i sessionen, `HANDOFF.md` |
