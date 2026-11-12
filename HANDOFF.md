@@ -13,7 +13,7 @@ Kontroller: `scripts/verify.sh` grön. **Inte visuellt verifierat** — dev-stor
 ## Nästa steg
 
 1. Pusha branchen till dev-storen som opublicerat tema och titta på startsida, produktsida, kollektion och varukorg i 390/768/1280 px. Gör detta **innan** någon kör `theme pull`.
-2. Bekräfta att rubrikerna visas i Playfair Display.
+2. Bekräfta i förhandsgranskningen att rubrikerna visas i Playfair Display (typsnittsnamnet är kontrollerat mot Shopifys dokumentation, renderingen är inte sedd).
 3. Ladda upp en inverterad logotyp för mörka scheman (theme editor → Logo).
 4. Ta ställning till hörnradier (förslag i `DESIGN.md` → Riktning).
 5. Därefter: header-redesign (PAR-8).

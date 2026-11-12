@@ -26,5 +26,14 @@ Shopify-kopplingen i Claude (connectorn, verktygen `mcp__Shopify__*`) ska **inte
 - **Live-butiken.** `6m05q1-6x.myshopify.com` är live-butiken, och hooken `.claude/hooks/guard-bash.mjs` blockerar alla CLI-kommandon mot den. Ska Toolkit-flödet användas där måste spärren ändras, till exempel så att läsning tillåts men `--allow-mutations` och temaskrivningar fortsatt blockeras. Det beslutet är inte fattat.
 - **Inloggning från molnsessioner fungerar inte.** Utrett 2026-11-12 mot dev-butiken: `shopify store auth` skickar webbläsaren tillbaka till `http://127.0.0.1:<port>/auth/callback` på den maskin där CLI:t körs. I en molncontainer når din webbläsare inte den adressen, så inloggningen kan inte slutföras oavsett nätverksinställningar. Med `--no-input` vägrar kommandot helt. `shopify store auth` och `shopify store execute` fungerar därför bara på en egen maskin.
 - **Möjlig väg för temakommandon i molnet.** `shopify theme push/pull` kan köras utan webbläsare med ett Theme Access-lösenord. Det kräver att butikens ägare skapar lösenordet, att det sparas i miljön och att `theme-kit-access.shopifyapps.com` tillåts. Inte provat.
-- **Nätverk.** I miljön `parfymia-april` nås dev-butiken och Shopifys CDN. `accounts.shopify.com`, `admin.shopify.com`, `partners.shopify.com`, `dev.shopify.com`, `shopify.dev` och `theme-kit-access.shopifyapps.com` nås inte. Utan `shopify.dev` fungerar inte AI Toolkits dokumentsökning.
+- **Nätverk.** I miljön `parfymia-april` nås dev-butiken, Shopifys CDN och sedan 2026-11-12 `shopify.dev`. `accounts.shopify.com`, `admin.shopify.com`, `partners.shopify.com`, `dev.shopify.com` och `theme-kit-access.shopifyapps.com` nås inte.
+
+## AI Toolkits dokumentsökning i molnsessioner
+
+Sökningen (`search_docs_chunks`) krävde två saker, lösta 2026-11-12:
+
+1. `shopify.dev` tillåten i miljöns nätverk.
+2. `NODE_USE_ENV_PROXY=1` för MCP-servern i `.mcp.json`. Molnsessioner når nätet via en proxy, och Nodes inbyggda `fetch` använder den inte utan den inställningen. Lokalt, utan proxy, har den ingen effekt.
+
+En redan startad session behöver startas om för att MCP-servern ska läsa in den nya inställningen.
 - **En app** via `npm init @shopify/app@latest` är begärd men inte skapad. Kommandot provades i molnsessionen 2026-11-12 och avbröts: utan interaktiv terminal kräver det `--organization-id` eller `--client-id`, det vill säga ett inloggat Shopify-konto. Det behöver köras på en egen maskin, eller med organisationens id angivet. Var koden ska ligga är också öppet: temarepot är build-fritt enligt `AGENTS.md`.

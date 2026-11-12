@@ -23,6 +23,6 @@ Hur det gjordes:
 ## Konsekvenser
 
 - **Pusha till dev-storen före nästa `theme pull`.** En pull från ett tema som inte har de här värdena skriver över dem.
-- Typsnittsnamnet `playfair_display_n4` kunde inte slås upp mot Shopifys typsnittsbibliotek från sessionen (ingen åtkomst till shopify.dev). Bekräfta i theme editor efter första push att rubrikerna visas i Playfair Display.
+- Typsnittsnamnet `playfair_display_n4` är kontrollerat 2026-11-12 mot Shopifys dokumentation över tillgängliga typsnitt: det finns i biblioteket (Playfair Display, normal 400). Att rubrikerna faktiskt renderas i Playfair Display är fortfarande inte sett i en förhandsgranskning.
 - Schema 4 var tidigare ljusblått och är nu sand. Sektioner som använde det för att sticka ut får en lugnare ton.
 - Den inverterade logotypen saknas fortfarande; nuvarande logotyp kan bli svårläst på schema 5 och 6.
