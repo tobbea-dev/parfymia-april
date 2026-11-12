@@ -2,26 +2,28 @@
 
 Överlämning mellan sessioner. Uppdateras i slutet av varje session där något ändrats. Håll den kort: nuläge, inte historik (historiken finns i git).
 
-## Senast (2026-11-11)
+## Senast (2026-11-12)
 
-Brand-anpassning, del 1: nya färgscheman (salviagrön accent, grönsvart text, varma neutraler) och Playfair Display i rubriker. Riktningen står i `DESIGN.md`, beslutet i `docs/decisions/0002-brand-farger-och-typsnitt.md`.
+Header-redesign, del 1: logotyp i mitten, huvudmenyn centrerad på egen rad i versaler, mörk annonsrad, tunn linje under headern, fäst header som visas vid skroll uppåt, dragspelsmeny på mobil. Allt är inställningar i `sections/header-group.json`.
 
-`config/settings_data.json` ändrades i kod som ett godkänt engångsundantag. Inga Liquid-, CSS- eller JS-filer är ändrade.
+En kodändring: menyblocket har fått inställningen "Letter spacing" (`blocks/_header-menu.liquid`, `snippets/menu-font-styles.liquid`, `snippets/header-drawer.liquid`). Etiketterna återanvänder befintliga översättningsnycklar, så inga nya strängar.
 
-Kontroller: `scripts/verify.sh` grön. **Inte visuellt verifierat** — dev-storen nås inte från molnsessionen.
+Sedan tidigare på `main`: brand-färger och Playfair Display i rubriker, engelska som primärspråk, beslutet om Shopify AI Toolkit + CLI.
+
+Kontroller: `scripts/verify.sh` grön. **Varken brand-ändringen eller headern är visuellt verifierad** — CLI-inloggning mot en butik går inte att slutföra från en molnsession (se `docs/decisions/0003`).
 
 ## Nästa steg
 
-1. Pusha branchen till dev-storen som opublicerat tema och titta på startsida, produktsida, kollektion och varukorg i 390/768/1280 px. Gör detta **innan** någon kör `theme pull`.
-2. Bekräfta i förhandsgranskningen att rubrikerna visas i Playfair Display (typsnittsnamnet är kontrollerat mot Shopifys dokumentation, renderingen är inte sedd).
-3. Ladda upp en inverterad logotyp för mörka scheman (theme editor → Logo).
-4. Ta ställning till hörnradier (förslag i `DESIGN.md` → Riktning).
-5. Därefter: header-redesign (PAR-8).
+1. Pusha `main` till dev-storen som opublicerat tema och titta på startsida, produktsida, kollektion och varukorg i 390/768/1280 px. Gör detta **innan** någon kör `theme pull`, annars skrivs inställningarna över.
+2. Kontrollera särskilt headern: att den nedre raden inte bryts med många menypunkter, och hur land/språk-väljaren ryms bredvid ikonerna.
+3. Byt annonsradens platshållartext mot butikens eget budskap.
+4. Ladda upp en inverterad logotyp för mörka scheman (theme editor → Logo).
+5. Därefter: hero och landningssida (PAR-9).
 
 ## Öppna frågor / väntar på människa
 
+- Vilken adress har Parfymias live-butik: `6m05q1-6x` (står i repot) eller `ikw71x-m0`?
+- Spärren blockerar även läsning mot live-butiken. Ändringen till "läsa ja, skriva nej" är framtagen men inte inlagd; agenter får inte ändra sina egna skyddsregler.
 - Målgrupp, referenser, bildspråk och ton är inte ifyllda i `DESIGN.md`.
-- Installera Claude GitHub-appen + secret `ANTHROPIC_API_KEY` om `@claude` ska fungera i PR:er.
-- Secret `SHOPIFY_CLI_THEME_TOKEN` (Theme Access) om CI ska pusha `main` till "Parfymia WIP" eller köra Lighthouse.
+- Appen (`npm init @shopify/app@latest`) kräver ett inloggat Shopify-konto och är inte skapad.
 - Branch protection på `main` och `prod` med krav på grönt "Theme check".
-- Nätverksåtkomst till `dev-parfymia.myshopify.com` i molnmiljön, annars kan `visual-review` bara köras lokalt.
