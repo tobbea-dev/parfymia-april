@@ -26,11 +26,12 @@ Sedan tidigare: agentteamet (sju agenter, `/agent-team`, Linear-teamet Goal), oc
 ## Öppna frågor / väntar på människa
 
 - **GOA-3, i theme editor:** logo i mitten, meny på nedre raden och i mitten, sökvisning "fält", lägg till toppfältet ovanför headern, fyll i USP:ar, genvägar och meddelandetext. Kontrollera mobil och dator.
-- **Butik för förhandsvisning är inte avgjord. Pusha inte förrän den är det.**
-  - `6m05q1-6x.myshopify.com` angavs först för GOA-3. Enligt en senare uppgift från ägaren är det Lilixas butik, inte Parfymias.
-  - `ikw71x-m0.myshopify.com` är enligt samma uppgift Parfymias butik. Om den är dev eller live är inte klarlagt, och spärren i `.claude/hooks/guard-bash.mjs` känner bara igen `parfymia.com`.
+- **Butiker (kontrollerat 2026-11-12 från molnsessionen):**
+  - `dev-parfymia.myshopify.com` svarar och leder till en lösenordssida. Det är dev-butiken enligt `AGENTS.md`. Förhandsvisning av GOA-3 görs här, som opublicerat tema och efter ägarens godkännande.
+  - `6m05q1-6x.myshopify.com` leder vidare till `lilixa.store`. Det är Lilixas butik, inte Parfymias. **Pusha inte Parfymia-temat dit.** Adressen ligger kvar i miljöns nätverkslista tills ägaren tar bort den.
+  - `ikw71x-m0.myshopify.com` uppges vara Parfymias butik. Dev eller live är inte klarlagt, och den ligger inte i miljöns nätverkslista.
   - `kpm6zp-2n.myshopify.com` ska inte användas (ägarens beslut 2026-11-12).
-  - Butikslistan har inte kunnat läsas härifrån: Shopify CLI har ingen inloggning i molnmiljön, och Shopify-kopplingen i Claude ska inte användas (beslut 0002).
+- **Inloggning saknas fortfarande.** Sessionen kör nu i miljön "parfymia-april" och når `dev-parfymia`, `shopify.dev`, `cdn.shopify.com` och `theme-kit-access.shopifyapps.com`. Shopify CLI behöver en Theme Access-token för dev-butiken, sparad som hemlighet i miljön.
 - **GOA-2:** välj serif för rubriker i theme editor.
 
 - Agentteamet har inte kört ett riktigt mål än. `planner`, `theme-developer`, `i18n` och `docs-writer` är oprovade, och ingen förbättringsiteration är gjord.
