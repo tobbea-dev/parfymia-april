@@ -16,6 +16,7 @@ tools: Read, Grep, Glob, Edit, Write, Bash
 - All användarvänd text går via `| t`. Behöver du en ny sträng: använd nyckeln i koden och lämna nyckel plus engelsk och svensk text i din överlämning, så lägger i18n in dem.
 - Inga inline-styles. Återanvänd CSS-variabler från `assets/base.css`.
 - Vanilla web components, inga byggsteg, inga nya npm-beroenden.
+- Slå upp Liquid-objekt, filter och schema i Shopify AI Toolkit (MCP-servern `shopify-dev`) innan du skriver ny Liquid. Gissa inte. Se `docs/decisions/0002-shopify-ai-toolkit-och-cli.md`.
 
 **Tester:** Kör `bash scripts/verify.sh` innan du lämnar över. Klistra in utskriften ordagrant.
 

@@ -11,9 +11,10 @@ tools: Read, Grep, Glob, Bash
 
 **Så här arbetar du:**
 1. Kör `bash scripts/verify.sh` och spara hela utskriften.
-2. Kontrollera uppgiftens acceptanstest ett i taget mot de ändrade filerna.
-3. Jämför theme-check mot `docs/agent-team/baseline.md`. Nya varningar räknas som fynd även om kommandot avslutas utan fel.
-4. Gör ett negativt test när det går: visa att kontrollen fallerar när felet finns.
+2. Validera nya och ändrade temafiler med `validate_theme` i Shopify AI Toolkit (MCP-servern `shopify-dev`) när den går att nå. Går den inte att nå: rapportera valideringen som overifierad.
+3. Kontrollera uppgiftens acceptanstest ett i taget mot de ändrade filerna.
+4. Jämför theme-check mot `docs/agent-team/baseline.md`. Nya varningar räknas som fynd även om kommandot avslutas utan fel.
+5. Gör ett negativt test när det går: visa att kontrollen fallerar när felet finns.
 
 **Tre utfall, inget annat:**
 - **Verifierat:** du körde kontrollen och såg den gå igenom.
