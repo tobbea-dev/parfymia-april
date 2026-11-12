@@ -10,12 +10,13 @@ try {
   process.exit(0);
 }
 
-const LIVE_STORE = /(www\.)?parfymia\.com/i;
+// Live-butiken har två adresser: den publika domänen och sin myshopify-adress.
+const LIVE_STORE = /(www\.)?parfymia\.com|6m05q1-6x/i;
 
 const rules = [
   {
     test: (c) => /\bshopify\b/.test(c) && LIVE_STORE.test(c.replace(/dev-parfymia\.myshopify\.com/gi, '')),
-    why: 'Kommandot riktar sig mot live-storen (www.parfymia.com). Produktion hanteras av en människa — se skill "prod-release".',
+    why: 'Kommandot riktar sig mot live-storen (www.parfymia.com / 6m05q1-6x.myshopify.com). Produktion hanteras av en människa — se skill "prod-release".',
   },
   {
     test: (c) => /\bshopify\s+theme\s+(push|publish|delete)\b[^\n;|&]*--(live|allow-live)\b/.test(c),

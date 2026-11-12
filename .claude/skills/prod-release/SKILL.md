@@ -1,6 +1,6 @@
 ---
 name: prod-release
-description: Checklista för att släppa Parfymia-temat till live-storen www.parfymia.com. Startas bara manuellt med /prod-release.
+description: Checklista för att släppa Parfymia-temat till live-storen www.parfymia.com (6m05q1-6x.myshopify.com). Startas bara manuellt med /prod-release.
 disable-model-invocation: true
 ---
 
@@ -18,14 +18,16 @@ Claude förbereder och kontrollerar. **En människa kör varje kommando som rör
 
 ## Människan gör
 
+Live-butikens myshopify-adress är `6m05q1-6x.myshopify.com`. Det är samma butik som `www.parfymia.com`; Shopify CLI vill ha myshopify-adressen.
+
 Backup av nuvarande live-tema:
 ```bash
-shopify theme pull --store=www.parfymia.com --live --path=./backups/$(date +%Y-%m-%d)
+shopify theme pull --store=6m05q1-6x.myshopify.com --live --path=./backups/$(date +%Y-%m-%d)
 ```
 
 Committa backupen på `prod`, merga PR:en, och pusha sedan som **opublicerat** tema för en sista kontroll:
 ```bash
-shopify theme push --store=www.parfymia.com --unpublished --theme="Parfymia release $(date +%Y-%m-%d)"
+shopify theme push --store=6m05q1-6x.myshopify.com --unpublished --theme="Parfymia release $(date +%Y-%m-%d)"
 ```
 
 Förhandsgranska i admin (startsida, produktsida, kollektion, varukorg, kassa, mobil). Publicera därefter temat i Shopify-admin → Webbshop → Teman.
