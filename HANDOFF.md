@@ -38,5 +38,9 @@ Sedan tidigare: agentteamet (sju agenter, `/agent-team`, Linear-teamet Goal), oc
 - Installera Claude GitHub-appen + secret `ANTHROPIC_API_KEY` om `@claude` ska fungera i PR:er.
 - Secret `SHOPIFY_CLI_THEME_TOKEN` (Theme Access) om CI ska pusha `main` till "Parfymia WIP" eller köra Lighthouse.
 - Branch protection på `main` och `prod` med krav på grönt "Theme check".
-- Nätverksåtkomst till `dev-parfymia.myshopify.com` i molnmiljön, annars kan `visual-review` bara köras lokalt.
+- **Varför molnsessionen inte når butiker (utrett 2026-11-12):**
+  - Sessionen kördes i miljön "Default", vars nätverk bara tillåter två Hostinger-adresser. Alla Shopify-adresser avvisas av proxyn (`shopify.dev`, `accounts.shopify.com`, `admin.shopify.com`, `cdn.shopify.com`, `theme-kit-access.shopifyapps.com` och butikerna).
+  - Miljön "parfymia-april" finns och tillåter `dev-parfymia.myshopify.com`, `6m05q1-6x.myshopify.com` och `cdn.shopify.com`, men sessionen startades inte i den. Den saknar `shopify.dev` och `theme-kit-access.shopifyapps.com` och har ingen hemlighet.
+  - Shopify CLI har ingen inloggning i molnet. `shopify auth login` kräver en webbläsare; i molnet behövs en Theme Access-token.
+  - Shopify AI Toolkit: `validate_theme` fungerar (körs lokalt). Dokumentsökningen fungerar inte, eftersom `shopify.dev` är spärrad. Toolkit loggar aldrig in i en butik; det gör bara CLI.
 - Finns en inverterad logotyp för mörka bakgrunder?
