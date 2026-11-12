@@ -21,7 +21,7 @@ Basen är **Shopify Horizon-temat** (Online Store 2.0). Vi anpassar gradvis utan
 
 ## Verktyg
 
-Arbete mot Shopify görs med **Shopify AI Toolkit** (MCP-servern `shopify-dev` i `.mcp.json`) för fakta och validering, och **Shopify CLI** för att utföra. Beslut och öppna frågor: `docs/decisions/0003-shopify-ai-toolkit-och-cli.md`.
+Arbete mot Shopify görs med **Shopify AI Toolkit** (MCP-servern `shopify-dev` i `.mcp.json`) för fakta och validering, och **Shopify CLI** för att utföra. Shopify-kopplingen i Claude (connectorn, `mcp__Shopify__*`) används **inte**. Beslut och öppna frågor: `docs/decisions/0003-shopify-ai-toolkit-och-cli.md`.
 
 ## Hur man kör
 

@@ -11,6 +11,10 @@ Arbete mot Shopify i det här projektet görs med **Shopify AI Toolkit** och **S
 
 Beslutat av repo-ägaren.
 
+## Tillägg 2026-11-12: Shopify-kopplingen i Claude används inte
+
+Shopify-kopplingen i Claude (connectorn, verktygen `mcp__Shopify__*`) ska **inte** användas i det här projektet — inte för att läsa butiksdata, inte för att slå upp butiker och inte för ändringar. All kontakt med Shopify går via AI Toolkit + Shopify CLI. Beslutat av repo-ägaren.
+
 ## Vad det innebär
 
 - Butiksåtkomst går via CLI:ts egen inloggning (`shopify store auth --store <butik> --scopes <rättigheter>`), med minsta möjliga rättigheter. En egen app behövs inte för att läsa eller ändra i en butik; den behövs först när något ska byggas (tillägg, Functions, adminsida).
