@@ -19,6 +19,10 @@ Basen är **Shopify Horizon-temat** (Online Store 2.0). Vi anpassar gradvis utan
 - **Dev**: `dev-parfymia.myshopify.com` — fri lekplats, pusha hit gärna
 - **Prod**: `www.parfymia.com` (myshopify-adress: `6m05q1-6x.myshopify.com`) — *aldrig* direkt-push, alltid via `prod`-branch och backup först
 
+## Verktyg
+
+Arbete mot Shopify görs med **Shopify AI Toolkit** (MCP-servern `shopify-dev` i `.mcp.json`) för fakta och validering, och **Shopify CLI** för att utföra. Beslut och öppna frågor: `docs/decisions/0003-shopify-ai-toolkit-och-cli.md`.
+
 ## Hur man kör
 
 Se `README.md` för fullständigt setup. Nyckelkommandon:
