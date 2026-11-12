@@ -14,6 +14,7 @@ Värdena under **Nuläge** är utlästa ur `config/settings_data.json` (Horizon-
 - **Primärfärg / accent:** svartvitt behålls. Ingen varumärkesfärg läggs till nu.
 - **Typsnitt rubrik / brödtext:** serif i rubriker, Inter kvar i brödtext och underrubriker. Exakt serif väljs i theme editor (Temainställningar → Typografi → rubriktypsnitt). Inte vald än.
 - **Logotyp:** behålls som den är.
+- **Header (GOA-3):** logo i mitten, kategorimenyn centrerad på egen rad under, öppet sökfält på dator, toppfält ovanför headern med USP:ar till vänster och genvägslänkar till höger. Ställs in i theme editor.
 - **Bildspråk:** _produkt på vit botten, livsstil, närbilder …_
 - **Ton i text:** _du-tilltal? saklig, lekfull, exklusiv?_
 

@@ -106,7 +106,7 @@ Aldrig commit direkt till `main` eller `prod`. Alltid PR.
 - ✅ Agent-setup: regler, hooks, permissions, kontroller, CI, kunskapsbas (se `docs/decisions/0001-claude-setup.md`)
 - ✅ Agentteam: sju agenter, `/agent-team`, rollkatalog och mål-kö i Linear (se `docs/agent-team/`)
 - ⬜ Brand-anpassning av färger, typsnitt, logo
-- ⬜ Header-redesign för Parfymia
+- 🟡 Header-redesign för Parfymia: toppfält (USP:ar, genvägar) och sökfält är byggda och granskade. Kvar: inställningar i theme editor och kontroll i butik
 - ⬜ Hero/landing
 - ⬜ Kategorinavigation (parfym → dam/herr/nisch, hår, hud, makeup …)
 - ⬜ Produktsida-anpassningar (notes/topnoter/baser för parfym, ingredienser för hudvård etc.)

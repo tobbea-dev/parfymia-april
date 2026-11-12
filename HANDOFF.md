@@ -2,13 +2,20 @@
 
 Överlämning mellan sessioner. Uppdateras i slutet av varje session där något ändrats. Håll den kort: nuläge, inte historik (historiken finns i git).
 
-## Senast (2026-11-11)
+## Senast (2026-11-12)
 
-Agent-setupen är på plats: `CLAUDE.md`, `.claude/` (settings, hooks, fyra skills), `scripts/verify.sh`, `.theme-check.yml`, GitHub Actions-jobb, PR-mall, `DESIGN.md`, `docs/`. Inga temafiler har ändrats.
+**GOA-3 Header-redesign: koden är klar och granskad, inget är kontrollerat i en butik.**
 
-Agentteamet är tillagt ovanpå: sju agenter i `.claude/agents/`, skillen `/agent-team`, rollkatalog och loggar i `docs/agent-team/`. Mål ligger som ärenden i Linear-teamet Goal (`GOA-1` till `GOA-7`). En referensuppgift med nio inplanterade fel fångades 9 av 9 av tester, reviewer och security.
+- Ny sektion `sections/header-topbar.liquid` för header-gruppen, med blocken `_usp-item` (ikon, text, valfri länk) och `_shortcut-link` (text, länk, framhäv).
+- Ny inställning i headern, "Sökvisning på dator": ikon (standard) eller fält. Fältet är en knapp som öppnar den befintliga sökmodalen.
+- Åtta nya editor-etiketter i alla 20 `locales/*.schema.json`.
+- Kontroller: verify grön (theme-check 0 fel, 28 varningar som i baslinjen), Shopify AI Toolkit VALID, granskaren GODKÄND efter en rättningsomgång. Se `docs/agent-team/runs/2026-11-11-GOA-3.md`.
 
-Baslinje för kontrollerna: JSON OK (67 filer), sv/en i synk, theme-check 0 fel / 28 varningar.
+**Toppfältet syns inte av sig självt.** `sections/header-group.json` ägs av theme editor, så sektionen måste läggas till där och dras ovanför headern.
+
+Beslut: Shopify AI Toolkit och Shopify CLI är verktygen för Shopify-arbete (`docs/decisions/0002-shopify-ai-toolkit-och-cli.md`).
+
+Sedan tidigare: agentteamet (sju agenter, `/agent-team`, Linear-teamet Goal), och GOA-2 där färger och logo behålls och rubriktypsnittet ska bytas till en serif i theme editor.
 
 ## Nästa steg
 
@@ -17,6 +24,10 @@ Baslinje för kontrollerna: JSON OK (67 filer), sv/en i synk, theme-check 0 fel 
 3. Header-redesign.
 
 ## Öppna frågor / väntar på människa
+
+- **GOA-3, i theme editor:** logo i mitten, meny på nedre raden och i mitten, sökvisning "fält", lägg till toppfältet ovanför headern, fyll i USP:ar, genvägar och meddelandetext. Kontrollera mobil och dator.
+- **Vilken butik gäller för förhandsvisning?** `6m05q1-6x.myshopify.com` angavs för GOA-3. Senare nämndes en nyckel till `kpm6zp-2n.myshopify.com` i en fil som inte finns i molnmiljön och som ser ut att höra till ett annat projekt. Ingen av dem har använts. Molnmiljön når inte butikerna och har ingen inloggning.
+- **GOA-2:** välj serif för rubriker i theme editor.
 
 - Agentteamet har inte kört ett riktigt mål än. `planner`, `theme-developer`, `i18n` och `docs-writer` är oprovade, och ingen förbättringsiteration är gjord.
 
