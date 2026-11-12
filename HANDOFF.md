@@ -13,7 +13,7 @@
 
 **Toppfältet syns inte av sig självt.** `sections/header-group.json` ägs av theme editor, så sektionen måste läggas till där och dras ovanför headern.
 
-Beslut: Shopify AI Toolkit och Shopify CLI är verktygen för Shopify-arbete (`docs/decisions/0002-shopify-ai-toolkit-och-cli.md`).
+Beslut: Shopify AI Toolkit och Shopify CLI är verktygen för Shopify-arbete, och Shopify-kopplingen i Claude ska inte användas (`docs/decisions/0002-shopify-ai-toolkit-och-cli.md`).
 
 Sedan tidigare: agentteamet (sju agenter, `/agent-team`, Linear-teamet Goal), och GOA-2 där färger och logo behålls och rubriktypsnittet ska bytas till en serif i theme editor.
 
@@ -30,7 +30,7 @@ Sedan tidigare: agentteamet (sju agenter, `/agent-team`, Linear-teamet Goal), oc
   - `6m05q1-6x.myshopify.com` angavs först för GOA-3. Enligt en senare uppgift från ägaren är det Lilixas butik, inte Parfymias.
   - `ikw71x-m0.myshopify.com` är enligt samma uppgift Parfymias butik. Om den är dev eller live är inte klarlagt, och spärren i `.claude/hooks/guard-bash.mjs` känner bara igen `parfymia.com`.
   - `kpm6zp-2n.myshopify.com` ska inte användas (ägarens beslut 2026-11-12).
-  - Butikslistan gick inte att läsa härifrån: Shopify-kopplingen kräver ny inloggning, och Shopify CLI har ingen inloggning i molnmiljön.
+  - Butikslistan har inte kunnat läsas härifrån: Shopify CLI har ingen inloggning i molnmiljön, och Shopify-kopplingen i Claude ska inte användas (beslut 0002).
 - **GOA-2:** välj serif för rubriker i theme editor.
 
 - Agentteamet har inte kört ett riktigt mål än. `planner`, `theme-developer`, `i18n` och `docs-writer` är oprovade, och ingen förbättringsiteration är gjord.

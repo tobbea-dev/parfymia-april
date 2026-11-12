@@ -18,3 +18,4 @@ Bara verifierade beslut och fakta, med hänvisning till bevis. Antaganden och pl
 | 2026-11-12 | Shopify CLI installeras av SessionStart-hooken, så theme-check körs även lokalt i molnmiljön. | `scripts/verify.sh`-utskrift i GOA-3-körningen |
 | 2026-11-12 | Butiken `kpm6zp-2n.myshopify.com` ska inte användas för Parfymia. Den hör till ett annat projekt. | Ägarens besked i sessionen, `HANDOFF.md` |
 | 2026-11-12 | Butiksadresserna är inte klarlagda: `6m05q1-6x` uppges vara Lilixa, `ikw71x-m0` uppges vara Parfymia (dev eller live okänt). Pusha inte till någon av dem utan ägarens uttryckliga besked. | Ägarens uppgift i sessionen, inte verifierad mot Shopify |
+| 2026-11-12 | Shopify-kopplingen i Claude (`mcp__Shopify__*`) ska inte användas, inte ens för att läsa. Bara Shopify AI Toolkit och Shopify CLI. | `docs/decisions/0002-shopify-ai-toolkit-och-cli.md` |
