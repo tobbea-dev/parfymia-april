@@ -16,3 +16,4 @@ Bara verifierade beslut och fakta, med hänvisning till bevis. Antaganden och pl
 | 2026-11-12 | Shopify AI Toolkit (MCP `shopify-dev`) och Shopify CLI är de verktyg som används för Shopify-arbete. Toolkit för uppslag och `validate_theme`, CLI för theme-check, förhandsvisning och push. | `docs/decisions/0002-shopify-ai-toolkit-och-cli.md` |
 | 2026-11-12 | En ny schema-nyckel måste finnas i alla 20 `locales/*.schema.json`, annars fäller theme-check med `MatchingTranslations`. `scripts/check-locales.mjs` kontrollerar bara sv och en. | `docs/agent-team/runs/2026-11-11-GOA-3.md` |
 | 2026-11-12 | Shopify CLI installeras av SessionStart-hooken, så theme-check körs även lokalt i molnmiljön. | `scripts/verify.sh`-utskrift i GOA-3-körningen |
+| 2026-11-12 | Butiken `kpm6zp-2n.myshopify.com` ska inte användas för Parfymia. Den hör till ett annat projekt. | Ägarens besked i sessionen, `HANDOFF.md` |

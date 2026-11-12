@@ -26,7 +26,7 @@ Sedan tidigare: agentteamet (sju agenter, `/agent-team`, Linear-teamet Goal), oc
 ## Öppna frågor / väntar på människa
 
 - **GOA-3, i theme editor:** logo i mitten, meny på nedre raden och i mitten, sökvisning "fält", lägg till toppfältet ovanför headern, fyll i USP:ar, genvägar och meddelandetext. Kontrollera mobil och dator.
-- **Vilken butik gäller för förhandsvisning?** `6m05q1-6x.myshopify.com` angavs för GOA-3. Senare nämndes en nyckel till `kpm6zp-2n.myshopify.com` i en fil som inte finns i molnmiljön och som ser ut att höra till ett annat projekt. Ingen av dem har använts. Molnmiljön når inte butikerna och har ingen inloggning.
+- **Butik för förhandsvisning:** `6m05q1-6x.myshopify.com` angavs för GOA-3 och har inte använts än: molnmiljön når den inte och har ingen inloggning. `kpm6zp-2n.myshopify.com` **ska inte användas** (beslut av ägaren 2026-11-12); den hör till ett annat projekt.
 - **GOA-2:** välj serif för rubriker i theme editor.
 
 - Agentteamet har inte kört ett riktigt mål än. `planner`, `theme-developer`, `i18n` och `docs-writer` är oprovade, och ingen förbättringsiteration är gjord.
