@@ -1,13 +1,13 @@
 diff --git a/assets/header-drawer.js b/assets/header-drawer.js
-index e32e26d..a7d82dc 100644
+index e32e26d..35e4b41 100644
 --- a/assets/header-drawer.js
 +++ b/assets/header-drawer.js
 @@ -113,6 +113,13 @@ class HeaderDrawer extends Component {
  
      if (!summary) return;
  
-+    // Read where focus is before anything is hidden. Focus returns to the opener when it is inside the menu
-+    // that closes, or nowhere (after a click on the backdrop). Focus that is somewhere else is left alone.
++    // Parfymia GOA-5: read where focus is before anything is hidden. Focus returns to the opener when it is inside
++    // the menu that closes, or nowhere (after a click on the backdrop). Focus that is somewhere else is left alone.
 +    const focused = document.activeElement;
 +    const restoreFocus =
 +      details.hasAttribute('open') &&
@@ -16,49 +16,55 @@ index e32e26d..a7d82dc 100644
      summary.setAttribute('aria-expanded', 'false');
      details.classList.remove('menu-open');
      this.refs.menuDrawer.classList.remove('menu-drawer--has-submenu-opened');
-@@ -132,6 +139,10 @@ class HeaderDrawer extends Component {
+@@ -124,6 +131,10 @@ class HeaderDrawer extends Component {
+     onAnimationEnd(
+       drawer || details,
+       () => {
++        // Parfymia GOA-5: focus may have moved during the transition, so read it again
++        const current = document.activeElement;
++        const focusStillHere = !current || current === document.body || details.contains(current);
++
+         reset(details);
+         if (details === this.refs.details) {
+           removeTrapFocus();
+@@ -132,6 +143,10 @@ class HeaderDrawer extends Component {
          } else {
            trapFocus(this.refs.details);
          }
 +
-+        if (restoreFocus) {
++        if (restoreFocus && focusStillHere) {
 +          summary.focus();
 +        }
        },
        { subtree: false }
      );
 diff --git a/assets/header-menu.js b/assets/header-menu.js
-index ed1af76..5047801 100644
+index ed1af76..8951b17 100644
 --- a/assets/header-menu.js
 +++ b/assets/header-menu.js
-@@ -27,12 +27,14 @@ class HeaderMenu extends Component {
- 
-     onDocumentLoaded(this.#preloadImages);
-     window.addEventListener('resize', this.#resizeListener);
-+    this.addEventListener('keydown', this.#onKeyDown);
-     this.overflowMenu?.addEventListener('pointerleave', this.#overflowSubmenuListener);
-   }
- 
+@@ -33,6 +33,8 @@ class HeaderMenu extends Component {
    disconnectedCallback() {
      super.disconnectedCallback();
      window.removeEventListener('resize', this.#resizeListener);
-+    this.removeEventListener('keydown', this.#onKeyDown);
++    // Parfymia GOA-5: Escape listener, only attached while a menu item is active
++    document.removeEventListener('keydown', this.#onKeyDown);
      document.body.removeEventListener('pointermove', this.#onPointerMove);
      if (this.#state.activeItem) {
        this.#stopPointerTracking(this.#state.activeItem);
-@@ -52,6 +54,42 @@ class HeaderMenu extends Component {
+@@ -52,6 +54,41 @@ class HeaderMenu extends Component {
      this.#deactivate();
    };
  
 +  /**
-+   * Set while focus is moved back to the trigger after Escape, so that the focus does not reopen the menu.
++   * Parfymia GOA-5: set while focus is moved back to the trigger after Escape, so that the focus does not reopen the menu.
 +   * @type {boolean}
 +   */
 +  #ignoreActivate = false;
 +
 +  /**
-+   * Close the open submenu when the Escape key is pressed and keep focus on the item that opened it.
-+   * The event is left untouched, so other Escape listeners still receive it.
++   * Parfymia GOA-5: close the open submenu when the Escape key is pressed. Listens on the document while a menu
++   * item is active, so that a menu opened by hover closes too. Focus moves to the item that opened the menu only
++   * when it was inside the menu. The event is left untouched, so other Escape listeners still receive it.
 +   * @param {KeyboardEvent} event
 +   */
 +  #onKeyDown = (event) => {
@@ -70,10 +76,8 @@ index ed1af76..5047801 100644
 +    // Items in the overflow menu are opened by the "More" button
 +    const trigger = item.parentElement?.matches('[slot="overflow"]') ? this.moreButton : item;
 +
-+    this.#deactivate();
-+
-+    // The menu stays open while the pointer is over it
-+    if (this.#state.activeItem) return;
++    // Escape closes the overflow menu even while the pointer is over it
++    this.#deactivate(item, true);
 +
 +    const focused = document.activeElement;
 +    if (!trigger || focused === trigger || !this.contains(focused)) return;
@@ -89,12 +93,12 @@ index ed1af76..5047801 100644
    /**
     * @type {State}
     */
-@@ -157,6 +195,13 @@ class HeaderMenu extends Component {
+@@ -157,6 +194,13 @@ class HeaderMenu extends Component {
      return this.refs.overflowMenu?.shadowRoot?.querySelector('[part="overflow-list"]')?.matches(':hover') ?? false;
    }
  
 +  /**
-+   * Get the "More" button that opens the overflow menu
++   * Parfymia GOA-5: get the "More" button that opens the overflow menu
 +   */
 +  get moreButton() {
 +    return /** @type {HTMLButtonElement | null} */ (this.querySelector('[slot="more"] button'));
@@ -103,19 +107,21 @@ index ed1af76..5047801 100644
    get headerComponent() {
      return /** @type {HTMLElement | null} */ (this.closest('header-component'));
    }
-@@ -166,6 +211,8 @@ class HeaderMenu extends Component {
+@@ -166,6 +210,9 @@ class HeaderMenu extends Component {
     * @param {PointerEvent | FocusEvent} event
     */
    activate = (event) => {
++    // Parfymia GOA-5: focus returned by Escape does not reopen the menu
 +    if (this.#ignoreActivate) return;
 +
      this.dispatchEvent(new MegaMenuHoverEvent());
  
      if (!(event.target instanceof Element) || !this.headerComponent) return;
-@@ -178,6 +225,10 @@ class HeaderMenu extends Component {
+@@ -178,6 +225,11 @@ class HeaderMenu extends Component {
  
      this.dataset.overflowExpanded = (!isDefaultSlot).toString();
  
++    // Parfymia GOA-5: state on the "More" button
 +    if (this.moreButton) {
 +      this.moreButton.ariaExpanded = this.dataset.overflowExpanded;
 +    }
@@ -123,34 +129,84 @@ index ed1af76..5047801 100644
      const previouslyActiveItem = this.#state.activeItem;
  
      if (previouslyActiveItem) {
-@@ -287,6 +338,10 @@ class HeaderMenu extends Component {
+@@ -187,6 +239,8 @@ class HeaderMenu extends Component {
+     this.#state.activeItem = item;
+     this.ariaExpanded = 'true';
+     item.ariaExpanded = 'true';
++    // Parfymia GOA-5: listen for Escape while a menu item is active
++    document.addEventListener('keydown', this.#onKeyDown);
+ 
+     let submenu = findSubmenu(item);
+     const hasSubmenu = Boolean(submenu);
+@@ -248,6 +302,19 @@ class HeaderMenu extends Component {
+     this.#startPointerTracking(item, previouslyActiveItem);
+   };
+ 
++  /**
++   * Parfymia GOA-5: click, Enter or Space on the "More" item opens the overflow menu when it is closed.
++   * Only keyboard activation closes an open one: a mouse click comes after the hover that opened it.
++   * @param {MouseEvent} event
++   */
++  toggleOverflow = (event) => {
++    if (this.dataset.overflowExpanded !== 'true') {
++      this.activate(event);
++    } else if (event.detail === 0) {
++      this.#deactivate(this.#state.activeItem, true);
++    }
++  };
++
+   /**
+    * Deactivate the active item after a delay
+    * @param {PointerEvent | FocusEvent} event
+@@ -275,18 +342,25 @@ class HeaderMenu extends Component {
+   /**
+    * Deactivate the active item immediately
+    * @param {HTMLElement | null} [item]
++   * @param {boolean} [force] - Parfymia GOA-5: close even when the overflow menu is hovered (keyboard)
+    */
+-  #deactivate = (item = this.#state.activeItem) => {
++  #deactivate = (item = this.#state.activeItem, force = false) => {
+     if (!item || item != this.#state.activeItem) return;
+ 
+     // Don't deactivate if the overflow menu or overflow list is still being hovered
+-    if (this.overflowListHovered || this.overflowMenu?.matches(':hover')) return;
++    if (!force && (this.overflowListHovered || this.overflowMenu?.matches(':hover'))) return;
+ 
+     this.headerComponent?.style.setProperty('--submenu-height', '0px');
+     this.#setFullOpenHeaderHeight(0);
      this.style.setProperty('--submenu-opacity', '0');
      this.dataset.overflowExpanded = 'false';
  
++    // Parfymia GOA-5: state on the "More" button, and stop listening for Escape
 +    if (this.moreButton) {
 +      this.moreButton.ariaExpanded = 'false';
 +    }
++    document.removeEventListener('keydown', this.#onKeyDown);
 +
      const submenu = findSubmenu(item);
  
      document.body.removeEventListener('pointermove', this.#onPointerMove);
 diff --git a/blocks/_header-menu.liquid b/blocks/_header-menu.liquid
-index d3bdbb6..72a5b8d 100644
+index d3bdbb6..cf65633 100644
 --- a/blocks/_header-menu.liquid
 +++ b/blocks/_header-menu.liquid
-@@ -148,7 +148,7 @@
+@@ -147,8 +147,10 @@
+         on:blur="/deactivate"
          on:pointerenter="/activate"
          on:pointerleave="/deactivate"
++        on:click="/toggleOverflow"
        >
 -        <button role="listitem" class="menu-list__link button-unstyled">
++        {% comment %} Parfymia GOA-5: a real button with state, opened by click, Enter and Space {% endcomment %}
 +        <button type="button" class="menu-list__link button-unstyled" aria-expanded="false">
            <span class="menu-list__link-title">{{ 'actions.more' | t }}</span>
          </button>
        </li>
-@@ -403,6 +403,15 @@
+@@ -403,6 +405,16 @@
      transition: clip-path var(--submenu-animation-speed) var(--ease-out-cubic); /* stylelint-disable-line */
    }
  
++  /* Parfymia GOA-5: no menu animation when reduced motion is requested */
 +  @media (prefers-reduced-motion: reduce) {
 +    .menu-list__list-item:where(:not([slot='overflow'])) > .menu-list__submenu,
 +    .overflow-menu::part(overflow) {
@@ -163,72 +219,6 @@ index d3bdbb6..72a5b8d 100644
    [data-submenu-overlap-bottom-row] {
      .menu-list__list-item:where(:not([slot='overflow'])) > .menu-list__submenu,
      .overflow-menu::part(overflow) {
-diff --git a/sections/header.liquid b/sections/header.liquid
-index ed07c53..2295ea5 100644
---- a/sections/header.liquid
-+++ b/sections/header.liquid
-@@ -618,6 +618,14 @@
-     transition: height var(--submenu-animation-speed) var(--ease-out-cubic);
-   }
- 
-+  @media (prefers-reduced-motion: reduce) {
-+    .header__underlay-closed,
-+    .header__underlay-open,
-+    .header__underlay-open::after {
-+      transition: none;
-+    }
-+  }
-+
-   /* When top row has transparent background, make underlay inherit colors from header component */
-   [data-transparent-color-scheme='top']:hover,
-   [data-transparent-color-scheme='top']:focus-within,
-diff --git a/snippets/header-drawer.liquid b/snippets/header-drawer.liquid
-index 9f3dce1..f22c431 100644
---- a/snippets/header-drawer.liquid
-+++ b/snippets/header-drawer.liquid
-@@ -1021,6 +1021,18 @@
-     animation-fill-mode: backwards;
-   }
- 
-+  @media (prefers-reduced-motion: reduce) {
-+    .menu-drawer,
-+    details[open] > .menu-drawer__submenu,
-+    .menu-drawer__backdrop {
-+      transition: none;
-+    }
-+
-+    .menu-drawer-container[open] .menu-drawer__animated-element {
-+      animation: none;
-+    }
-+  }
-+
-   .menu-drawer__menu accordion-custom .details-content--no-animation {
-     animation: none;
-     visibility: visible;
-diff --git a/snippets/mega-menu-list.liquid b/snippets/mega-menu-list.liquid
-index 873afdb..4e7a691 100644
---- a/snippets/mega-menu-list.liquid
-+++ b/snippets/mega-menu-list.liquid
-@@ -110,6 +110,9 @@
-       <a
-         href="{{ link.url }}"
-         class="mega-menu__link {% if link.links != blank %}mega-menu__link--parent{% endif %}"
-+        {% if link.current %}
-+          aria-current="page"
-+        {% endif %}
-       >
-         {% if menu_content_type == 'collection_images' %}
-           {%- capture collection_image_sizes -%}
-@@ -152,6 +155,9 @@
-               <a
-                 href="{{ childLink.url }}"
-                 class="mega-menu__link"
-+                {% if childLink.current %}
-+                  aria-current="page"
-+                {% endif %}
-               >
-                 <span class="wrap-text">{{- childLink.title -}}</span>
-               </a>
 diff --git a/locales/sv.json b/locales/sv.json
 index 8eb502a..2127dfa 100644
 --- a/locales/sv.json
@@ -242,3 +232,78 @@ index 8eb502a..2127dfa 100644
      "reset": "Återställ",
      "zoom": "Zoom",
      "close_dialog": "Stäng dialogruta",
+diff --git a/sections/header.liquid b/sections/header.liquid
+index ed07c53..c80898e 100644
+--- a/sections/header.liquid
++++ b/sections/header.liquid
+@@ -618,6 +618,15 @@
+     transition: height var(--submenu-animation-speed) var(--ease-out-cubic);
+   }
+ 
++  /* Parfymia GOA-5: no underlay transition with reduced motion */
++  @media (prefers-reduced-motion: reduce) {
++    .header__underlay-closed,
++    .header__underlay-open,
++    .header__underlay-open::after {
++      transition: none;
++    }
++  }
++
+   /* When top row has transparent background, make underlay inherit colors from header component */
+   [data-transparent-color-scheme='top']:hover,
+   [data-transparent-color-scheme='top']:focus-within,
+diff --git a/snippets/header-drawer.liquid b/snippets/header-drawer.liquid
+index 9f3dce1..cec992f 100644
+--- a/snippets/header-drawer.liquid
++++ b/snippets/header-drawer.liquid
+@@ -1021,6 +1021,24 @@
+     animation-fill-mode: backwards;
+   }
+ 
++  /* Parfymia GOA-5: no drawer animation when reduced motion is requested */
++  @media (prefers-reduced-motion: reduce) {
++    /* 1ms, not none: header-drawer.js waits for this transition before it removes the open attribute. Without a
++       transition that happens before the summary's own toggle, and the details element is left open. */
++    .menu-drawer,
++    details[open] > .menu-drawer__submenu {
++      transition-duration: 1ms;
++    }
++
++    .menu-drawer__backdrop {
++      transition: none;
++    }
++
++    .menu-drawer-container[open] .menu-drawer__animated-element {
++      animation: none;
++    }
++  }
++
+   .menu-drawer__menu accordion-custom .details-content--no-animation {
+     animation: none;
+     visibility: visible;
+diff --git a/snippets/mega-menu-list.liquid b/snippets/mega-menu-list.liquid
+index 873afdb..34d603e 100644
+--- a/snippets/mega-menu-list.liquid
++++ b/snippets/mega-menu-list.liquid
+@@ -110,6 +110,10 @@
+       <a
+         href="{{ link.url }}"
+         class="mega-menu__link {% if link.links != blank %}mega-menu__link--parent{% endif %}"
++        {%- comment -%}Parfymia GOA-5: mark the current page{%- endcomment -%}
++        {% if link.current %}
++          aria-current="page"
++        {% endif %}
+       >
+         {% if menu_content_type == 'collection_images' %}
+           {%- capture collection_image_sizes -%}
+@@ -152,6 +156,10 @@
+               <a
+                 href="{{ childLink.url }}"
+                 class="mega-menu__link"
++                {%- comment -%}Parfymia GOA-5: mark the current page{%- endcomment -%}
++                {% if childLink.current %}
++                  aria-current="page"
++                {% endif %}
+               >
+                 <span class="wrap-text">{{- childLink.title -}}</span>
+               </a>
