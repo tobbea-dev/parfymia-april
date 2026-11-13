@@ -37,3 +37,14 @@ Sökningen (`search_docs_chunks`) krävde två saker, lösta 2026-11-12:
 
 En redan startad session behöver startas om för att MCP-servern ska läsa in den nya inställningen.
 - **En app** via `npm init @shopify/app@latest` är begärd men inte skapad. Kommandot provades i molnsessionen 2026-11-12 och avbröts: utan interaktiv terminal kräver det `--organization-id` eller `--client-id`, det vill säga ett inloggat Shopify-konto. Det behöver köras på en egen maskin, eller med organisationens id angivet. Var koden ska ligga är också öppet: temarepot är build-fritt enligt `AGENTS.md`.
+
+## Tillägg 2026-11-12: temakommandon fungerar från molnsessioner
+
+Punkten "Möjlig väg för temakommandon i molnet" ovan är nu provad och fungerar. `shopify theme list` och `shopify theme push` har körts från en molnsession mot dev-butiken. Det som krävs:
+
+1. **Butikens permanenta adress.** För dev-butiken är den `devparfymia.myshopify.com`, utan bindestreck. Med `dev-parfymia.myshopify.com` avvisas lösenordet med 401.
+2. **Theme Access-lösenord** skapat i dev-butikens admin, sparat som hemlighet i miljön `parfymia-april` för `theme-kit-access.shopifyapps.com`. Proxyn lägger på det; `--password` får ett platshållarvärde som börjar med `shptka_`.
+3. **`NODE_USE_ENV_PROXY=1`** för kommandot, annars går CLI förbi proxyn.
+4. **Nätverk:** `theme-kit-access.shopifyapps.com` och `devparfymia.myshopify.com` är tillagda i miljön. Uppgiften under "Nätverk" ovan om att `theme-kit-access.shopifyapps.com` inte nås gäller därmed inte längre.
+
+Oförändrat: `shopify store auth` och `shopify store execute` fungerar inte från molnet, av de skäl som står ovan.

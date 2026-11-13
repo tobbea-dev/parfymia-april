@@ -1,0 +1,12 @@
+# Hör till repot, inte till temat. Ska aldrig laddas upp till butiken.
+.claude/
+.github/
+docs/
+scripts/
+AGENTS.md
+README.md
+CLAUDE.md
+DESIGN.md
+HANDOFF.md
+.mcp.json
+.theme-check.yml

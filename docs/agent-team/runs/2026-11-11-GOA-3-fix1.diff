@@ -1,0 +1,99 @@
+diff --git a/blocks/_shortcut-link.liquid b/blocks/_shortcut-link.liquid
+index 4679c7d..df49099 100644
+--- a/blocks/_shortcut-link.liquid
++++ b/blocks/_shortcut-link.liquid
+@@ -1,6 +1,6 @@
+ {%- liquid
+   assign shortcut_text = block.settings.text | strip
+-  assign shortcut_class = 'header-topbar__shortcut'
++  assign shortcut_class = 'header-topbar__shortcut header-topbar__shortcut--link'
+ 
+   if block.settings.highlight
+     assign shortcut_class = shortcut_class | append: ' header-topbar__shortcut--highlight'
+@@ -11,14 +11,18 @@
+   {%- if block.settings.link != blank -%}
+     <a
+       href="{{ block.settings.link }}"
+-      class="{{ shortcut_class }} header-topbar__shortcut--link"
++      class="{{ shortcut_class }}"
+       {{ block.shopify_attributes }}
+     >
+       {{- shortcut_text | escape -}}
+     </a>
+-  {%- else -%}
++  {%- elsif request.design_mode -%}
++    {%- comment -%}
++      No link: nothing on the storefront. In the theme editor the block stays visible
++      as plain text (never highlighted) so the merchant can select it and add the link.
++    {%- endcomment -%}
+     <span
+-      class="{{ shortcut_class }}"
++      class="header-topbar__shortcut"
+       {{ block.shopify_attributes }}
+     >
+       {{- shortcut_text | escape -}}
+@@ -40,7 +44,7 @@
+     text-underline-offset: var(--padding-2xs);
+   }
+ 
+-  .header-topbar__shortcut--highlight {
++  .header-topbar__shortcut--link.header-topbar__shortcut--highlight {
+     text-decoration: underline;
+     text-underline-offset: var(--padding-2xs);
+   }
+diff --git a/blocks/_usp-item.liquid b/blocks/_usp-item.liquid
+index 64472cd..e394f1a 100644
+--- a/blocks/_usp-item.liquid
++++ b/blocks/_usp-item.liquid
+@@ -5,13 +5,26 @@
+ 
+ {%- if usp_text != blank or usp_icon != 'none' -%}
+   {%- capture usp_content -%}
+-    {%- render 'icon-or-image', icon: usp_icon, image_upload: block.settings.image_upload, width: 16, class_name: 'header-topbar__usp-icon' -%}
++    {%- if usp_icon != 'none' -%}
++      <svg
++        class="header-topbar__usp-icon icon-default"
++        aria-hidden="true"
++        focusable="false"
++        xmlns="http://www.w3.org/2000/svg"
++        width="16"
++        height="16"
++        viewBox="0 0 20 20"
++      >
++        {%- render 'icon', icon: usp_icon -%}
++      </svg>
++    {%- endif -%}
+     {%- if usp_text != blank -%}
+       <span class="header-topbar__usp-text">{{ usp_text | escape }}</span>
+     {%- endif -%}
+   {%- endcapture -%}
+ 
+-  {%- if block.settings.link != blank -%}
++  {%- comment -%} Only link when there is visible text: an icon-only link has no accessible name. {%- endcomment -%}
++  {%- if block.settings.link != blank and usp_text != blank -%}
+     <a
+       href="{{ block.settings.link }}"
+       class="header-topbar__usp header-topbar__usp--link"
+@@ -305,7 +318,8 @@
+     {
+       "type": "text",
+       "id": "text",
+-      "label": "t:settings.text"
++      "label": "t:settings.text",
++      "default": "t:text_defaults.shipping"
+     },
+     {
+       "type": "url",
+diff --git a/snippets/search.liquid b/snippets/search.liquid
+index 6ec3849..c76bc74 100644
+--- a/snippets/search.liquid
++++ b/snippets/search.liquid
+@@ -29,7 +29,7 @@
+       </span>
+     </button>
+     {%- if search_display == 'field' -%}
+-      <button type="button" class="button-unstyled search-action__field" on:click="#search-modal/showDialog" aria-label="{{ 'content.search_input_label' | t }}" aria-haspopup="dialog">
++      <button type="button" class="button-unstyled search-action__field" on:click="#search-modal/showDialog" aria-haspopup="dialog">
+         <span class="svg-wrapper search-action__field-icon">
+           {{- 'icon-search.svg' | inline_asset_content -}}
+         </span>

@@ -11,6 +11,8 @@ Beslutat 2026-11-11.
 - **Känsla:** exklusiv parfymeri. Stillsam, lyxig, mycket luft. Produkten och doften står i centrum, inte kampanjer.
 - **Accentfärg:** salviagrön.
 - **Typografi:** serif i rubriker, sans i brödtext.
+- **Header (GOA-3, beslutat 2026-11-11):** logo i mitten, kategorimenyn centrerad på egen rad under, öppet sökfält på dator, toppfält ovanför headern med säljargument till vänster och genvägslänkar till höger. Ställs in i theme editor.
+- **Startsida (GOA-4, beslutat 2026-11-12):** hero med kampanjbudskap, kategoriingångar, varumärkesrad, bästsäljare och nyheter.
 
 Inte bestämt än:
 
