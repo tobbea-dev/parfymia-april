@@ -27,12 +27,14 @@ class HeaderMenu extends Component {
 
     onDocumentLoaded(this.#preloadImages);
     window.addEventListener('resize', this.#resizeListener);
+    this.addEventListener('keydown', this.#onKeyDown);
     this.overflowMenu?.addEventListener('pointerleave', this.#overflowSubmenuListener);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     window.removeEventListener('resize', this.#resizeListener);
+    this.removeEventListener('keydown', this.#onKeyDown);
     document.body.removeEventListener('pointermove', this.#onPointerMove);
     if (this.#state.activeItem) {
       this.#stopPointerTracking(this.#state.activeItem);
@@ -50,6 +52,42 @@ class HeaderMenu extends Component {
 
   #overflowSubmenuListener = () => {
     this.#deactivate();
+  };
+
+  /**
+   * Set while focus is moved back to the trigger after Escape, so that the focus does not reopen the menu.
+   * @type {boolean}
+   */
+  #ignoreActivate = false;
+
+  /**
+   * Close the open submenu when the Escape key is pressed and keep focus on the item that opened it.
+   * The event is left untouched, so other Escape listeners still receive it.
+   * @param {KeyboardEvent} event
+   */
+  #onKeyDown = (event) => {
+    if (event.key !== 'Escape') return;
+
+    const item = this.#state.activeItem;
+    if (!item) return;
+
+    // Items in the overflow menu are opened by the "More" button
+    const trigger = item.parentElement?.matches('[slot="overflow"]') ? this.moreButton : item;
+
+    this.#deactivate();
+
+    // The menu stays open while the pointer is over it
+    if (this.#state.activeItem) return;
+
+    const focused = document.activeElement;
+    if (!trigger || focused === trigger || !this.contains(focused)) return;
+
+    this.#ignoreActivate = true;
+    try {
+      trigger.focus();
+    } finally {
+      this.#ignoreActivate = false;
+    }
   };
 
   /**
@@ -157,6 +195,13 @@ class HeaderMenu extends Component {
     return this.refs.overflowMenu?.shadowRoot?.querySelector('[part="overflow-list"]')?.matches(':hover') ?? false;
   }
 
+  /**
+   * Get the "More" button that opens the overflow menu
+   */
+  get moreButton() {
+    return /** @type {HTMLButtonElement | null} */ (this.querySelector('[slot="more"] button'));
+  }
+
   get headerComponent() {
     return /** @type {HTMLElement | null} */ (this.closest('header-component'));
   }
@@ -166,6 +211,8 @@ class HeaderMenu extends Component {
    * @param {PointerEvent | FocusEvent} event
    */
   activate = (event) => {
+    if (this.#ignoreActivate) return;
+
     this.dispatchEvent(new MegaMenuHoverEvent());
 
     if (!(event.target instanceof Element) || !this.headerComponent) return;
@@ -177,6 +224,10 @@ class HeaderMenu extends Component {
     const isDefaultSlot = event.target.slot === '';
 
     this.dataset.overflowExpanded = (!isDefaultSlot).toString();
+
+    if (this.moreButton) {
+      this.moreButton.ariaExpanded = this.dataset.overflowExpanded;
+    }
 
     const previouslyActiveItem = this.#state.activeItem;
 
@@ -286,6 +337,10 @@ class HeaderMenu extends Component {
     this.#setFullOpenHeaderHeight(0);
     this.style.setProperty('--submenu-opacity', '0');
     this.dataset.overflowExpanded = 'false';
+
+    if (this.moreButton) {
+      this.moreButton.ariaExpanded = 'false';
+    }
 
     const submenu = findSubmenu(item);
 

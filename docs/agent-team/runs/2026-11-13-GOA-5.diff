@@ -1,0 +1,244 @@
+diff --git a/assets/header-drawer.js b/assets/header-drawer.js
+index e32e26d..a7d82dc 100644
+--- a/assets/header-drawer.js
++++ b/assets/header-drawer.js
+@@ -113,6 +113,13 @@ class HeaderDrawer extends Component {
+ 
+     if (!summary) return;
+ 
++    // Read where focus is before anything is hidden. Focus returns to the opener when it is inside the menu
++    // that closes, or nowhere (after a click on the backdrop). Focus that is somewhere else is left alone.
++    const focused = document.activeElement;
++    const restoreFocus =
++      details.hasAttribute('open') &&
++      (details.contains(focused) || (details === this.refs.details && (!focused || focused === document.body)));
++
+     summary.setAttribute('aria-expanded', 'false');
+     details.classList.remove('menu-open');
+     this.refs.menuDrawer.classList.remove('menu-drawer--has-submenu-opened');
+@@ -132,6 +139,10 @@ class HeaderDrawer extends Component {
+         } else {
+           trapFocus(this.refs.details);
+         }
++
++        if (restoreFocus) {
++          summary.focus();
++        }
+       },
+       { subtree: false }
+     );
+diff --git a/assets/header-menu.js b/assets/header-menu.js
+index ed1af76..5047801 100644
+--- a/assets/header-menu.js
++++ b/assets/header-menu.js
+@@ -27,12 +27,14 @@ class HeaderMenu extends Component {
+ 
+     onDocumentLoaded(this.#preloadImages);
+     window.addEventListener('resize', this.#resizeListener);
++    this.addEventListener('keydown', this.#onKeyDown);
+     this.overflowMenu?.addEventListener('pointerleave', this.#overflowSubmenuListener);
+   }
+ 
+   disconnectedCallback() {
+     super.disconnectedCallback();
+     window.removeEventListener('resize', this.#resizeListener);
++    this.removeEventListener('keydown', this.#onKeyDown);
+     document.body.removeEventListener('pointermove', this.#onPointerMove);
+     if (this.#state.activeItem) {
+       this.#stopPointerTracking(this.#state.activeItem);
+@@ -52,6 +54,42 @@ class HeaderMenu extends Component {
+     this.#deactivate();
+   };
+ 
++  /**
++   * Set while focus is moved back to the trigger after Escape, so that the focus does not reopen the menu.
++   * @type {boolean}
++   */
++  #ignoreActivate = false;
++
++  /**
++   * Close the open submenu when the Escape key is pressed and keep focus on the item that opened it.
++   * The event is left untouched, so other Escape listeners still receive it.
++   * @param {KeyboardEvent} event
++   */
++  #onKeyDown = (event) => {
++    if (event.key !== 'Escape') return;
++
++    const item = this.#state.activeItem;
++    if (!item) return;
++
++    // Items in the overflow menu are opened by the "More" button
++    const trigger = item.parentElement?.matches('[slot="overflow"]') ? this.moreButton : item;
++
++    this.#deactivate();
++
++    // The menu stays open while the pointer is over it
++    if (this.#state.activeItem) return;
++
++    const focused = document.activeElement;
++    if (!trigger || focused === trigger || !this.contains(focused)) return;
++
++    this.#ignoreActivate = true;
++    try {
++      trigger.focus();
++    } finally {
++      this.#ignoreActivate = false;
++    }
++  };
++
+   /**
+    * @type {State}
+    */
+@@ -157,6 +195,13 @@ class HeaderMenu extends Component {
+     return this.refs.overflowMenu?.shadowRoot?.querySelector('[part="overflow-list"]')?.matches(':hover') ?? false;
+   }
+ 
++  /**
++   * Get the "More" button that opens the overflow menu
++   */
++  get moreButton() {
++    return /** @type {HTMLButtonElement | null} */ (this.querySelector('[slot="more"] button'));
++  }
++
+   get headerComponent() {
+     return /** @type {HTMLElement | null} */ (this.closest('header-component'));
+   }
+@@ -166,6 +211,8 @@ class HeaderMenu extends Component {
+    * @param {PointerEvent | FocusEvent} event
+    */
+   activate = (event) => {
++    if (this.#ignoreActivate) return;
++
+     this.dispatchEvent(new MegaMenuHoverEvent());
+ 
+     if (!(event.target instanceof Element) || !this.headerComponent) return;
+@@ -178,6 +225,10 @@ class HeaderMenu extends Component {
+ 
+     this.dataset.overflowExpanded = (!isDefaultSlot).toString();
+ 
++    if (this.moreButton) {
++      this.moreButton.ariaExpanded = this.dataset.overflowExpanded;
++    }
++
+     const previouslyActiveItem = this.#state.activeItem;
+ 
+     if (previouslyActiveItem) {
+@@ -287,6 +338,10 @@ class HeaderMenu extends Component {
+     this.style.setProperty('--submenu-opacity', '0');
+     this.dataset.overflowExpanded = 'false';
+ 
++    if (this.moreButton) {
++      this.moreButton.ariaExpanded = 'false';
++    }
++
+     const submenu = findSubmenu(item);
+ 
+     document.body.removeEventListener('pointermove', this.#onPointerMove);
+diff --git a/blocks/_header-menu.liquid b/blocks/_header-menu.liquid
+index d3bdbb6..72a5b8d 100644
+--- a/blocks/_header-menu.liquid
++++ b/blocks/_header-menu.liquid
+@@ -148,7 +148,7 @@
+         on:pointerenter="/activate"
+         on:pointerleave="/deactivate"
+       >
+-        <button role="listitem" class="menu-list__link button-unstyled">
++        <button type="button" class="menu-list__link button-unstyled" aria-expanded="false">
+           <span class="menu-list__link-title">{{ 'actions.more' | t }}</span>
+         </button>
+       </li>
+@@ -403,6 +403,15 @@
+     transition: clip-path var(--submenu-animation-speed) var(--ease-out-cubic); /* stylelint-disable-line */
+   }
+ 
++  @media (prefers-reduced-motion: reduce) {
++    .menu-list__list-item:where(:not([slot='overflow'])) > .menu-list__submenu,
++    .overflow-menu::part(overflow) {
++      --submenu-content-animation: none;
++
++      transition: none;
++    }
++  }
++
+   [data-submenu-overlap-bottom-row] {
+     .menu-list__list-item:where(:not([slot='overflow'])) > .menu-list__submenu,
+     .overflow-menu::part(overflow) {
+diff --git a/sections/header.liquid b/sections/header.liquid
+index ed07c53..2295ea5 100644
+--- a/sections/header.liquid
++++ b/sections/header.liquid
+@@ -618,6 +618,14 @@
+     transition: height var(--submenu-animation-speed) var(--ease-out-cubic);
+   }
+ 
++  @media (prefers-reduced-motion: reduce) {
++    .header__underlay-closed,
++    .header__underlay-open,
++    .header__underlay-open::after {
++      transition: none;
++    }
++  }
++
+   /* When top row has transparent background, make underlay inherit colors from header component */
+   [data-transparent-color-scheme='top']:hover,
+   [data-transparent-color-scheme='top']:focus-within,
+diff --git a/snippets/header-drawer.liquid b/snippets/header-drawer.liquid
+index 9f3dce1..f22c431 100644
+--- a/snippets/header-drawer.liquid
++++ b/snippets/header-drawer.liquid
+@@ -1021,6 +1021,18 @@
+     animation-fill-mode: backwards;
+   }
+ 
++  @media (prefers-reduced-motion: reduce) {
++    .menu-drawer,
++    details[open] > .menu-drawer__submenu,
++    .menu-drawer__backdrop {
++      transition: none;
++    }
++
++    .menu-drawer-container[open] .menu-drawer__animated-element {
++      animation: none;
++    }
++  }
++
+   .menu-drawer__menu accordion-custom .details-content--no-animation {
+     animation: none;
+     visibility: visible;
+diff --git a/snippets/mega-menu-list.liquid b/snippets/mega-menu-list.liquid
+index 873afdb..4e7a691 100644
+--- a/snippets/mega-menu-list.liquid
++++ b/snippets/mega-menu-list.liquid
+@@ -110,6 +110,9 @@
+       <a
+         href="{{ link.url }}"
+         class="mega-menu__link {% if link.links != blank %}mega-menu__link--parent{% endif %}"
++        {% if link.current %}
++          aria-current="page"
++        {% endif %}
+       >
+         {% if menu_content_type == 'collection_images' %}
+           {%- capture collection_image_sizes -%}
+@@ -152,6 +155,9 @@
+               <a
+                 href="{{ childLink.url }}"
+                 class="mega-menu__link"
++                {% if childLink.current %}
++                  aria-current="page"
++                {% endif %}
+               >
+                 <span class="wrap-text">{{- childLink.title -}}</span>
+               </a>
+diff --git a/locales/sv.json b/locales/sv.json
+index 8eb502a..2127dfa 100644
+--- a/locales/sv.json
++++ b/locales/sv.json
+@@ -95,7 +95,7 @@
+     "show_less": "Visa färre",
+     "show_more": "Visa fler",
+     "close": "Stäng",
+-    "more": "Mer",
++    "more": "Fler",
+     "reset": "Återställ",
+     "zoom": "Zoom",
+     "close_dialog": "Stäng dialogruta",

@@ -113,6 +113,13 @@ class HeaderDrawer extends Component {
 
     if (!summary) return;
 
+    // Read where focus is before anything is hidden. Focus returns to the opener when it is inside the menu
+    // that closes, or nowhere (after a click on the backdrop). Focus that is somewhere else is left alone.
+    const focused = document.activeElement;
+    const restoreFocus =
+      details.hasAttribute('open') &&
+      (details.contains(focused) || (details === this.refs.details && (!focused || focused === document.body)));
+
     summary.setAttribute('aria-expanded', 'false');
     details.classList.remove('menu-open');
     this.refs.menuDrawer.classList.remove('menu-drawer--has-submenu-opened');
@@ -131,6 +138,10 @@ class HeaderDrawer extends Component {
           openDetails.forEach(reset);
         } else {
           trapFocus(this.refs.details);
+        }
+
+        if (restoreFocus) {
+          summary.focus();
         }
       },
       { subtree: false }

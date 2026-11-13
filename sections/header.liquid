@@ -618,6 +618,14 @@
     transition: height var(--submenu-animation-speed) var(--ease-out-cubic);
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .header__underlay-closed,
+    .header__underlay-open,
+    .header__underlay-open::after {
+      transition: none;
+    }
+  }
+
   /* When top row has transparent background, make underlay inherit colors from header component */
   [data-transparent-color-scheme='top']:hover,
   [data-transparent-color-scheme='top']:focus-within,

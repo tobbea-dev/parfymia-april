@@ -1021,6 +1021,18 @@
     animation-fill-mode: backwards;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .menu-drawer,
+    details[open] > .menu-drawer__submenu,
+    .menu-drawer__backdrop {
+      transition: none;
+    }
+
+    .menu-drawer-container[open] .menu-drawer__animated-element {
+      animation: none;
+    }
+  }
+
   .menu-drawer__menu accordion-custom .details-content--no-animation {
     animation: none;
     visibility: visible;

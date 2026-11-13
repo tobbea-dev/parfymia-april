@@ -110,6 +110,9 @@
       <a
         href="{{ link.url }}"
         class="mega-menu__link {% if link.links != blank %}mega-menu__link--parent{% endif %}"
+        {% if link.current %}
+          aria-current="page"
+        {% endif %}
       >
         {% if menu_content_type == 'collection_images' %}
           {%- capture collection_image_sizes -%}
@@ -152,6 +155,9 @@
               <a
                 href="{{ childLink.url }}"
                 class="mega-menu__link"
+                {% if childLink.current %}
+                  aria-current="page"
+                {% endif %}
               >
                 <span class="wrap-text">{{- childLink.title -}}</span>
               </a>
