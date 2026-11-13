@@ -14,7 +14,7 @@ Kontroller: `scripts/verify.sh` grön. **Inte visuellt verifierat** — dev-stor
 
 - **Agentteam:** sju agenter i `.claude/agents/`, skillen `/agent-team GOA-<nr>`, rollkatalog och loggar i `docs/agent-team/`. Mål ligger som ärenden i Linear-teamet Goal (`GOA-1` till `GOA-7`).
 - **GOA-3 Header-redesign:** koden är klar och granskad. Ny sektion `sections/header-topbar.liquid` med blocken `_usp-item` och `_shortcut-link`, och inställningen "Sökvisning på dator" (ikon eller fält) i headern. Åtta nya editor-etiketter i alla 20 `locales/*.schema.json`. Körlogg: `docs/agent-team/runs/2026-11-11-GOA-3.md`.
-- **Uppladdad till dev-butiken** som opublicerat tema `Parfymia GOA-3`, id `162800009301`, med ägarens godkännande. Den uppladdningen gjordes före sammanslagningen med `main` och har därför de gamla svartvita färgerna. Uppdatera samma tema med `--theme 162800009301`, skapa inte ett nytt.
+- **Uppladdad till dev-butiken** som opublicerat tema `Parfymia GOA-3`, id `162800009301`, med ägarens godkännande. Uppdatera samma tema med `--theme 162800009301`, skapa inte ett nytt.
 - **Toppfältet syns inte av sig självt.** `sections/header-group.json` ägs av theme editor, så sektionen läggs till där och dras ovanför headern.
 - **GOA-2 är ersatt.** Körningen den 11 november landade i "behåll svartvitt". Det gäller inte längre: `docs/decisions/0002-brand-farger-och-typsnitt.md` är beslutet.
 
@@ -35,7 +35,7 @@ Fungerar för temakommandon sedan 2026-11-12, i miljön `parfymia-april`:
 ## GOA-4 Startsida (2026-11-13)
 
 - **Byggt:** `templates/index.json` har fem sektioner i ordning: hero (orörd), kategoriingångar, varumärkesrad, bästsäljare, nyheter. Bara befintliga Horizon-sektioner och block. Ingen ny kod, inga locale-ändringar. Körlogg: `docs/agent-team/runs/2026-11-13-GOA-4.md`.
-- **Inte uppladdat.** Temat `Parfymia GOA-3` (`162800009301`) i dev-butiken har fortfarande den gamla startsidan. Uppladdning kräver ägarens godkännande, och den skriver över startsidesinställningar som gjorts i theme editor i det temat.
+- **Uppladdat 2026-11-13** till dev-butikens opublicerade tema `Parfymia GOA-3` (`162800009301`) med ägarens godkännande, från commit `829c9e4`. Temat har nu header (GOA-3), startsida (GOA-4) och brand-färgerna från `main`. Nästa uppladdning skriver över inställningar som gjorts i theme editor i det temat; kör `theme pull` först om de ska behållas.
 - **Inte sett renderat.** Layouten på mobil och dator är slutsats av kodläsning.
 - **Görs i theme editor innan temat publiceras:**
   1. Hero: bild och kampanjbudskap.
@@ -52,7 +52,7 @@ Fungerar för temakommandon sedan 2026-11-12, i miljön `parfymia-april`:
 2. Bekräfta i förhandsgranskningen att rubrikerna visas i Playfair Display (typsnittsnamnet är kontrollerat mot Shopifys dokumentation, renderingen är inte sedd).
 3. Ladda upp en inverterad logotyp för mörka scheman (theme editor → Logo).
 4. Ta ställning till hörnradier (förslag i `DESIGN.md` → Riktning).
-5. Ladda upp branchen till `Parfymia GOA-3` efter ägarens godkännande, ställ in header (GOA-3) och startsida (GOA-4) i theme editor.
+5. Ställ in header (GOA-3) och startsida (GOA-4) i theme editor i temat `Parfymia GOA-3`.
 
 ## Öppna frågor / väntar på människa
 
