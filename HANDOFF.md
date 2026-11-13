@@ -10,11 +10,11 @@ En kodändring: menyblocket har fått inställningen "Letter spacing" (`blocks/_
 
 Sedan tidigare på `main`: brand-färger och Playfair Display i rubriker, engelska som primärspråk, beslutet om Shopify AI Toolkit + CLI.
 
-Kontroller: `scripts/verify.sh` grön. **Varken brand-ändringen eller headern är visuellt verifierad** — CLI-inloggning mot en butik går inte att slutföra från en molnsession (se `docs/decisions/0003`).
+Kontroller: `scripts/verify.sh` grön. **Varken brand-ändringen eller headern är visuellt verifierad.** Temat går att ladda upp till dev-storen från molnet med Theme Access (se `docs/decisions/0003`), men skyltfönstret är lösenordsskyddat, så ingen skärmdump är tagen.
 
 ## Nästa steg
 
-1. Pusha `main` till dev-storen som opublicerat tema och titta på startsida, produktsida, kollektion och varukorg i 390/768/1280 px. Gör detta **innan** någon kör `theme pull`, annars skrivs inställningarna över.
+1. Titta på temat "Parfymia WIP" på dev-storen `devparfymia.myshopify.com` (uppladdat 2026-11-13 från header-branchen, tema-id 162814492757): startsida, produktsida, kollektion och varukorg i 390/768/1280 px. Kör inte `theme pull` från ett annat tema innan dess, annars skrivs inställningarna över.
 2. Kontrollera särskilt headern: att den nedre raden inte bryts med många menypunkter, och hur land/språk-väljaren ryms bredvid ikonerna.
 3. Byt annonsradens platshållartext mot butikens eget budskap.
 4. Ladda upp en inverterad logotyp för mörka scheman (theme editor → Logo).
