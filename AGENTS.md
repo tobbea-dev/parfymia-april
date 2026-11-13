@@ -113,7 +113,7 @@ Aldrig commit direkt till `main` eller `prod`. Alltid PR.
 - ✅ Agentteam: sju agenter, `/agent-team`, rollkatalog och mål-kö i Linear (se `docs/agent-team/`)
 - 🟡 Header-redesign för Parfymia: toppfält (säljargument, genvägar) och sökfält är byggda, granskade och uppladdade till dev-storen som opublicerat tema. Kvar: inställningar i theme editor och kontroll i butik
 - 🟡 Hero/landing: startsidans mall är byggd och granskad (hero, kategoriingångar, varumärkesrad, bästsäljare, nyheter), se `docs/agent-team/runs/2026-11-13-GOA-4.md`. Kvar: bilder, texter, länkar och kollektioner i theme editor, och kontroll i butik
-- ⬜ Kategorinavigation (parfym → dam/herr/nisch, hår, hud, makeup …)
+- 🟡 Kategorinavigation: menyn byggs från butikens navigation (Horizon). Fem tillgänglighetsbrister i meny och mobillåda är rättade och granskade, se `docs/agent-team/runs/2026-11-13-GOA-5.md`. Kvar: lägga in menyn i Shopify admin, inställningar i theme editor och kontroll i butik
 - ⬜ Produktsida-anpassningar (notes/topnoter/baser för parfym, ingredienser för hudvård etc.)
 - ⬜ Språk: engelska som primärspråk, svenska som sekundärt — granska svenska översättningen och välj vilka övriga språk som ska vara kvar
 

@@ -46,6 +46,16 @@ Fungerar för temakommandon sedan 2026-11-12, i miljön `parfymia-april`:
 - **Platshållarbilder syns för kunden** tills alla elva bilder är valda.
 - **Känd brist:** när en grupp har länk renderar `snippets/group.liquid` en länk utan text eller `aria-label`. Kräver kodändring och är inte gjord.
 
+## GOA-5 Kategorinavigation (2026-11-13)
+
+- **Menyn är inte kod.** Horizon bygger huvudmenyn, megamenyn och mobillådan från butikens navigation (`main-menu`). Ägarens beslut: sju toppnivåpunkter (Parfym, Hårvård, Hudvård, Makeup, Grooming, Varumärken, Mer), två nivåer, undermeny med bara text. Förslag på underkategorier och steg i Shopify admin och theme editor står i `docs/agent-team/runs/2026-11-13-GOA-5.md`, avsnitt C och D.
+- **Rättat i kod:** Escape stänger megamenyn, överskottsknappen är en riktig knapp med tillstånd, aktuell sida markeras i megamenyn, fokus återgår till menyknappen när lådan stängs, och animationerna följer "minska rörelse". Ändringarna ligger i sex av Horizons filer och är märkta `Parfymia GOA-5:`.
+- **"Fler" i stället för "Mer"** på Horizons överskottsknapp (svenska), även på filterraden på kollektionssidor.
+- **Inte uppladdat** till dev-butiken. `sections/header-group.json` i repot har `menu_style: featured_products`, `menu_row: top`, `menu_position: left`, så en uppladdning skriver över menyinställningar som gjorts i theme editor.
+- **Inte provat i butik.** Rättningarna är körda i en förenklad testsida i Chromium. Skärmläsare, Safari och pekskärm är oprovade.
+- **Känt fel i Horizon, inte rättat:** stängs lådan med menyknappen och öppnas igen med menyknappen kan andra trycket gå förlorat. Prova i butiken.
+- **Inte rättat, kräver ombyggnad:** mobillådan är inte en dialog för hjälpmedel (I4 i körloggen).
+
 ## Nästa steg
 
 1. Pusha branchen till dev-storen som opublicerat tema och titta på startsida, produktsida, kollektion och varukorg i 390/768/1280 px. Gör detta **innan** någon kör `theme pull`.
