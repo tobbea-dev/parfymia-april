@@ -120,15 +120,16 @@
                 "horizontal_alignment_flex_direction_column": "center",
                 "vertical_alignment_flex_direction_column": "flex-start",
                 "gap": 12,
-                "width": "fill",
+                "width": "custom",
                 "width_mobile": "custom",
-                "custom_width_mobile": 45,
+                "custom_width_mobile": 28,
                 "height": "fit",
                 "inherit_color_scheme": true,
                 "background_media": "none",
                 "border": "none",
                 "link": "",
-                "open_in_new_tab": false
+                "open_in_new_tab": false,
+                "custom_width": 28
               },
               "blocks": {
                 "category_1_image": {
@@ -164,15 +165,16 @@
                 "horizontal_alignment_flex_direction_column": "center",
                 "vertical_alignment_flex_direction_column": "flex-start",
                 "gap": 12,
-                "width": "fill",
+                "width": "custom",
                 "width_mobile": "custom",
-                "custom_width_mobile": 45,
+                "custom_width_mobile": 28,
                 "height": "fit",
                 "inherit_color_scheme": true,
                 "background_media": "none",
                 "border": "none",
                 "link": "",
-                "open_in_new_tab": false
+                "open_in_new_tab": false,
+                "custom_width": 28
               },
               "blocks": {
                 "category_2_image": {
@@ -208,15 +210,16 @@
                 "horizontal_alignment_flex_direction_column": "center",
                 "vertical_alignment_flex_direction_column": "flex-start",
                 "gap": 12,
-                "width": "fill",
+                "width": "custom",
                 "width_mobile": "custom",
-                "custom_width_mobile": 45,
+                "custom_width_mobile": 28,
                 "height": "fit",
                 "inherit_color_scheme": true,
                 "background_media": "none",
                 "border": "none",
                 "link": "",
-                "open_in_new_tab": false
+                "open_in_new_tab": false,
+                "custom_width": 28
               },
               "blocks": {
                 "category_3_image": {
@@ -252,15 +255,16 @@
                 "horizontal_alignment_flex_direction_column": "center",
                 "vertical_alignment_flex_direction_column": "flex-start",
                 "gap": 12,
-                "width": "fill",
+                "width": "custom",
                 "width_mobile": "custom",
-                "custom_width_mobile": 45,
+                "custom_width_mobile": 28,
                 "height": "fit",
                 "inherit_color_scheme": true,
                 "background_media": "none",
                 "border": "none",
                 "link": "",
-                "open_in_new_tab": false
+                "open_in_new_tab": false,
+                "custom_width": 28
               },
               "blocks": {
                 "category_4_image": {
@@ -296,15 +300,16 @@
                 "horizontal_alignment_flex_direction_column": "center",
                 "vertical_alignment_flex_direction_column": "flex-start",
                 "gap": 12,
-                "width": "fill",
+                "width": "custom",
                 "width_mobile": "custom",
-                "custom_width_mobile": 45,
+                "custom_width_mobile": 28,
                 "height": "fit",
                 "inherit_color_scheme": true,
                 "background_media": "none",
                 "border": "none",
                 "link": "",
-                "open_in_new_tab": false
+                "open_in_new_tab": false,
+                "custom_width": 28
               },
               "blocks": {
                 "category_5_image": {
