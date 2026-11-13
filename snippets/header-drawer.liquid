@@ -1021,9 +1021,15 @@
     animation-fill-mode: backwards;
   }
 
+  /* Parfymia GOA-5: no drawer animation when reduced motion is requested */
   @media (prefers-reduced-motion: reduce) {
+    /* 1ms, not none: header-drawer.js waits for this transition before it removes the open attribute. Without a
+       transition that happens before the summary's own toggle, and the details element is left open. */
     .menu-drawer,
-    details[open] > .menu-drawer__submenu,
+    details[open] > .menu-drawer__submenu {
+      transition-duration: 1ms;
+    }
+
     .menu-drawer__backdrop {
       transition: none;
     }

@@ -147,7 +147,9 @@
         on:blur="/deactivate"
         on:pointerenter="/activate"
         on:pointerleave="/deactivate"
+        on:click="/toggleOverflow"
       >
+        {% comment %} Parfymia GOA-5: a real button with state, opened by click, Enter and Space {% endcomment %}
         <button type="button" class="menu-list__link button-unstyled" aria-expanded="false">
           <span class="menu-list__link-title">{{ 'actions.more' | t }}</span>
         </button>
@@ -403,6 +405,7 @@
     transition: clip-path var(--submenu-animation-speed) var(--ease-out-cubic); /* stylelint-disable-line */
   }
 
+  /* Parfymia GOA-5: no menu animation when reduced motion is requested */
   @media (prefers-reduced-motion: reduce) {
     .menu-list__list-item:where(:not([slot='overflow'])) > .menu-list__submenu,
     .overflow-menu::part(overflow) {

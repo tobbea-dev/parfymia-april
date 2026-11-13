@@ -27,14 +27,14 @@ class HeaderMenu extends Component {
 
     onDocumentLoaded(this.#preloadImages);
     window.addEventListener('resize', this.#resizeListener);
-    this.addEventListener('keydown', this.#onKeyDown);
     this.overflowMenu?.addEventListener('pointerleave', this.#overflowSubmenuListener);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     window.removeEventListener('resize', this.#resizeListener);
-    this.removeEventListener('keydown', this.#onKeyDown);
+    // Parfymia GOA-5: Escape listener, only attached while a menu item is active
+    document.removeEventListener('keydown', this.#onKeyDown);
     document.body.removeEventListener('pointermove', this.#onPointerMove);
     if (this.#state.activeItem) {
       this.#stopPointerTracking(this.#state.activeItem);
@@ -55,14 +55,15 @@ class HeaderMenu extends Component {
   };
 
   /**
-   * Set while focus is moved back to the trigger after Escape, so that the focus does not reopen the menu.
+   * Parfymia GOA-5: set while focus is moved back to the trigger after Escape, so that the focus does not reopen the menu.
    * @type {boolean}
    */
   #ignoreActivate = false;
 
   /**
-   * Close the open submenu when the Escape key is pressed and keep focus on the item that opened it.
-   * The event is left untouched, so other Escape listeners still receive it.
+   * Parfymia GOA-5: close the open submenu when the Escape key is pressed. Listens on the document while a menu
+   * item is active, so that a menu opened by hover closes too. Focus moves to the item that opened the menu only
+   * when it was inside the menu. The event is left untouched, so other Escape listeners still receive it.
    * @param {KeyboardEvent} event
    */
   #onKeyDown = (event) => {
@@ -74,10 +75,8 @@ class HeaderMenu extends Component {
     // Items in the overflow menu are opened by the "More" button
     const trigger = item.parentElement?.matches('[slot="overflow"]') ? this.moreButton : item;
 
-    this.#deactivate();
-
-    // The menu stays open while the pointer is over it
-    if (this.#state.activeItem) return;
+    // Escape closes the overflow menu even while the pointer is over it
+    this.#deactivate(item, true);
 
     const focused = document.activeElement;
     if (!trigger || focused === trigger || !this.contains(focused)) return;
@@ -196,7 +195,7 @@ class HeaderMenu extends Component {
   }
 
   /**
-   * Get the "More" button that opens the overflow menu
+   * Parfymia GOA-5: get the "More" button that opens the overflow menu
    */
   get moreButton() {
     return /** @type {HTMLButtonElement | null} */ (this.querySelector('[slot="more"] button'));
@@ -211,6 +210,7 @@ class HeaderMenu extends Component {
    * @param {PointerEvent | FocusEvent} event
    */
   activate = (event) => {
+    // Parfymia GOA-5: focus returned by Escape does not reopen the menu
     if (this.#ignoreActivate) return;
 
     this.dispatchEvent(new MegaMenuHoverEvent());
@@ -225,6 +225,7 @@ class HeaderMenu extends Component {
 
     this.dataset.overflowExpanded = (!isDefaultSlot).toString();
 
+    // Parfymia GOA-5: state on the "More" button
     if (this.moreButton) {
       this.moreButton.ariaExpanded = this.dataset.overflowExpanded;
     }
@@ -238,6 +239,8 @@ class HeaderMenu extends Component {
     this.#state.activeItem = item;
     this.ariaExpanded = 'true';
     item.ariaExpanded = 'true';
+    // Parfymia GOA-5: listen for Escape while a menu item is active
+    document.addEventListener('keydown', this.#onKeyDown);
 
     let submenu = findSubmenu(item);
     const hasSubmenu = Boolean(submenu);
@@ -300,6 +303,19 @@ class HeaderMenu extends Component {
   };
 
   /**
+   * Parfymia GOA-5: click, Enter or Space on the "More" item opens the overflow menu when it is closed.
+   * Only keyboard activation closes an open one: a mouse click comes after the hover that opened it.
+   * @param {MouseEvent} event
+   */
+  toggleOverflow = (event) => {
+    if (this.dataset.overflowExpanded !== 'true') {
+      this.activate(event);
+    } else if (event.detail === 0) {
+      this.#deactivate(this.#state.activeItem, true);
+    }
+  };
+
+  /**
    * Deactivate the active item after a delay
    * @param {PointerEvent | FocusEvent} event
    */
@@ -326,21 +342,24 @@ class HeaderMenu extends Component {
   /**
    * Deactivate the active item immediately
    * @param {HTMLElement | null} [item]
+   * @param {boolean} [force] - Parfymia GOA-5: close even when the overflow menu is hovered (keyboard)
    */
-  #deactivate = (item = this.#state.activeItem) => {
+  #deactivate = (item = this.#state.activeItem, force = false) => {
     if (!item || item != this.#state.activeItem) return;
 
     // Don't deactivate if the overflow menu or overflow list is still being hovered
-    if (this.overflowListHovered || this.overflowMenu?.matches(':hover')) return;
+    if (!force && (this.overflowListHovered || this.overflowMenu?.matches(':hover'))) return;
 
     this.headerComponent?.style.setProperty('--submenu-height', '0px');
     this.#setFullOpenHeaderHeight(0);
     this.style.setProperty('--submenu-opacity', '0');
     this.dataset.overflowExpanded = 'false';
 
+    // Parfymia GOA-5: state on the "More" button, and stop listening for Escape
     if (this.moreButton) {
       this.moreButton.ariaExpanded = 'false';
     }
+    document.removeEventListener('keydown', this.#onKeyDown);
 
     const submenu = findSubmenu(item);
 
