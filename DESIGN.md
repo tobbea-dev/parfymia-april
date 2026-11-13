@@ -2,55 +2,84 @@
 
 Designunderlag för Parfymia-temat. Läses av agenter innan UI-arbete och används som facit i `visual-review`.
 
-Värdena under **Nuläge** är utlästa ur `config/settings_data.json` (Horizon-exporten 28 apr 2026). De ändras i theme editor, inte i koden — uppdatera den här filen när de ändras.
+Värdena lagras i `config/settings_data.json` och ändras normalt i theme editor. Uppdatera den här filen när de ändras.
 
 ## Riktning — Parfymia
 
-> 🟡 Delvis bestämt 2026-11-11 (GOA-2). Färg, typsnitt och logo är beslutade. Övriga rader är öppna.
+Beslutat 2026-11-11.
 
-- **Känsla:** _t.ex. tre adjektiv_
-- **Målgrupp:** _vem handlar, vad jämför de med_
-- **Referenser:** _butiker/varumärken vi vill likna och inte likna_
-- **Primärfärg / accent:** svartvitt behålls. Ingen varumärkesfärg läggs till nu.
-- **Typsnitt rubrik / brödtext:** serif i rubriker, Inter kvar i brödtext och underrubriker. Exakt serif väljs i theme editor (Temainställningar → Typografi → rubriktypsnitt). Inte vald än.
-- **Logotyp:** behålls som den är.
-- **Header (GOA-3):** logo i mitten, kategorimenyn centrerad på egen rad under, öppet sökfält på dator, toppfält ovanför headern med USP:ar till vänster och genvägslänkar till höger. Ställs in i theme editor.
+- **Känsla:** exklusiv parfymeri. Stillsam, lyxig, mycket luft. Produkten och doften står i centrum, inte kampanjer.
+- **Accentfärg:** salviagrön.
+- **Typografi:** serif i rubriker, sans i brödtext.
+- **Header (GOA-3, beslutat 2026-11-11):** logo i mitten, kategorimenyn centrerad på egen rad under, öppet sökfält på dator, toppfält ovanför headern med säljargument till vänster och genvägslänkar till höger. Ställs in i theme editor.
+- **Startsida (GOA-4, beslutat 2026-11-12):** hero med kampanjbudskap, kategoriingångar, varumärkesrad, bästsäljare och nyheter.
+
+Inte bestämt än:
+
+- **Målgrupp och referenser:** _vem handlar, vilka butiker vill vi likna och inte likna_
 - **Bildspråk:** _produkt på vit botten, livsstil, närbilder …_
-- **Ton i text:** _du-tilltal? saklig, lekfull, exklusiv?_
+- **Ton i text:** _du-tilltal? saklig, exklusiv?_
+- **Form:** hörnradierna nedan är Horizons standard. En exklusiv känsla brukar tala för skarpare hörn (2–4 px på knappar) — öppet förslag.
 
-## Nuläge
+## Färg
 
-### Logotyp
-`Logga_Parfymia_sm.png` — höjd 36 px desktop, 28 px mobil. Samma fil för ljus och mörk bakgrund (ingen inverterad variant än).
+### Palett
+
+| Namn | Hex | Används till |
+|---|---|---|
+| Bläck | `#1f2421` | Rubriker, text, sekundära knappar |
+| Salvia | `#5f7161` | Primära knappar — accentfärgen |
+| Mörk salvia | `#4b5a4d` | Länkar, knapp-hover |
+| Skog | `#2a332c` | Mörk bakgrund, vald variant |
+| Elfenben | `#f7f4ee` | Varm bakgrund, text på mörkt |
+| Blek salvia | `#e6ebe4` | Tonad bakgrund |
+| Sand | `#efe9e1` | Tonad bakgrund |
+| Vit | `#ffffff` | Standardbakgrund (produktbilder har vit botten) |
+
+Ren svart används inte; bläck är en grönsvart som håller ihop med salvian.
 
 ### Färgscheman
 
-| Schema | Bakgrund | Text | Primär knapp (bg / text) | Kant |
+| Schema | Bakgrund | Text | Primär knapp (bg / text) | Användning |
 |---|---|---|---|---|
-| scheme-1 | `#ffffff` | `#000000cf` | `#000000` / `#ffffff` | `#0000000f` |
-| scheme-2 | `#f5f5f5` | `#000000cf` | `#000000` / `#ffffff` | `#dfdfdf` |
-| scheme-3 | `#eef1ea` | `#000000cf` | `#000000` / `#ffffff` | `#000000cf` |
-| scheme-4 | `#e1edf5` | `#000000cf` | `#000000` / `#ffffff` | `#1d368680` |
-| scheme-5 | `#333333` | `#ffffff` | `#ffffff` / `#000000` | `#ffffffb0` |
-| scheme-6 | transparent | `#ffffff` | `#ffffff` / `#000000` | `#e6e6e6` |
+| scheme-1 | Vit | Bläck | Salvia / vit | Standard: produktlistor, produktsida |
+| scheme-2 | Elfenben | Bläck | Salvia / vit | Redaktionellt innehåll, varannan sektion |
+| scheme-3 | Blek salvia | Bläck | Salvia / vit | Framhävda sektioner, slutsåld-badge |
+| scheme-4 | Sand | Bläck | Salvia / vit | Alternativ tonad sektion |
+| scheme-5 | Skog | Elfenben | Elfenben / skog | Mörka sektioner, sidfot, annonsrad |
+| scheme-6 | Transparent | Elfenben | Elfenben / skog | Text ovanpå mörka bilder |
+| scheme-58084d4c… | Transparent | Bläck | Salvia / vit | Text ovanpå ljusa bilder |
 
-Detta är Horizons standardpalett: svartvit, ingen varumärkesfärg.
+Kontrast (WCAG): all text och alla knappar i schema 1–5 ligger på minst 4.5:1. Lägst är vit text på salviaknapp, 5.2:1. Schema 6 och det transparenta schemat beror på bilden bakom — välj bild därefter.
 
-### Typografi
+Salvia får inte användas som textfärg på tonad bakgrund; använd mörk salvia.
 
-Inter i hela temat: brödtext 400, underrubrik 500, rubrik och accent 700.
+## Typografi
 
-| Nivå | Storlek | Typsnitt |
+| Roll | Typsnitt | Vikt |
 |---|---|---|
-| H1 | 56 px | rubrik |
-| H2 | 48 px | rubrik |
-| H3 | 32 px | rubrik |
-| H4 | 24 px | rubrik |
-| H5 | 14 px | underrubrik |
-| H6 | 12 px | underrubrik |
-| Brödtext | 14 px | brödtext |
+| Rubrik (H1–H4) | Playfair Display | 400 |
+| Underrubrik (H5–H6) | Inter | 500 |
+| Brödtext | Inter | 400 |
+| Accent | Inter | 700 |
 
-### Form
+| Nivå | Storlek |
+|---|---|
+| H1 | 56 px |
+| H2 | 48 px |
+| H3 | 32 px |
+| H4 | 24 px |
+| H5 | 14 px |
+| H6 | 12 px |
+| Brödtext | 14 px |
+
+## Logotyp
+
+`Logga_Parfymia_sm.png` — höjd 36 px desktop, 28 px mobil. Samma fil används för ljus och mörk bakgrund. En inverterad (ljus) variant behövs för schema 5 och 6 och laddas upp i theme editor → Logo.
+
+## Form
+
+Oförändrat från Horizon-exporten.
 
 | Element | Hörnradie |
 |---|---|

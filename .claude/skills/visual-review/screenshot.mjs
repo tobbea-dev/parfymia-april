@@ -10,7 +10,7 @@ if (!base) {
   console.error('Användning: node screenshot.mjs <preview-url> [/sökväg ...]');
   process.exit(1);
 }
-if (/(^|\/\/)(www\.)?parfymia\.com/i.test(base)) {
+if (/(^|\/\/)(www\.)?parfymia\.com|6m05q1-6x/i.test(base)) {
   console.error('Granska mot dev-storen eller lokal preview, inte live-storen.');
   process.exit(1);
 }

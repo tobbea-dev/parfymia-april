@@ -21,6 +21,7 @@
       "Read(./.env.*)",
       "Bash(shopify theme publish:*)",
       "Bash(shopify *www.parfymia.com*)",
+      "Bash(shopify *6m05q1-6x*)",
       "Bash(shopify *--allow-live*)"
     ]
   },

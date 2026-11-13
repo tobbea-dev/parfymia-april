@@ -18,7 +18,11 @@ Basen är **Shopify Horizon-temat** (Online Store 2.0). Vi anpassar gradvis utan
 
 - **Dev**: `dev-parfymia.myshopify.com` — fri lekplats, pusha hit gärna
   - Permanent adress för Shopify CLI med Theme Access-lösenord: `devparfymia.myshopify.com` (utan bindestreck). `dev-parfymia` fungerar i webbläsaren men avvisas av CLI.
-- **Prod**: `www.parfymia.com` — *aldrig* direkt-push, alltid via `prod`-branch och backup först
+- **Prod**: `www.parfymia.com` (myshopify-adress: `6m05q1-6x.myshopify.com`) — *aldrig* direkt-push, alltid via `prod`-branch och backup först
+
+## Verktyg
+
+Arbete mot Shopify görs med **Shopify AI Toolkit** (MCP-servern `shopify-dev` i `.mcp.json`) för fakta och validering, och **Shopify CLI** för att utföra. Shopify-kopplingen i Claude (connectorn, `mcp__Shopify__*`) används **inte**. Beslut och öppna frågor: `docs/decisions/0003-shopify-ai-toolkit-och-cli.md`.
 
 ## Hur man kör
 
@@ -67,7 +71,7 @@ Den kontrollerar JSON-syntax, att `sv` och `en` har samma översättningsnycklar
 - För stora bilder (hero, kategoribanner) — låt theme-editorn äga dem som `image_picker`-settings istället för att lägga in i `assets/`.
 
 ### Översättningar
-- Primärspråk: **svenska (sv)**. Sekundär: engelska (en).
+- Primärspråk: **engelska (en)** — `locales/en.default.json` är temats standardfil. Sekundär: svenska (sv).
 - Alla nya strängar ska in i båda `locales/sv.json` och `locales/en.default.json`.
 
 ## Branch-strategi
@@ -105,12 +109,12 @@ Aldrig commit direkt till `main` eller `prod`. Alltid PR.
 
 - ✅ Initial baseline från Horizon-export importerad (commit `9a78eff`)
 - ✅ Agent-setup: regler, hooks, permissions, kontroller, CI, kunskapsbas (se `docs/decisions/0001-claude-setup.md`)
+- 🟡 Brand-anpassning: färger och rubriktypsnitt klara (se `DESIGN.md`, `docs/decisions/0002-brand-farger-och-typsnitt.md`). Kvar: inverterad logo, verifiering på dev-storen
 - ✅ Agentteam: sju agenter, `/agent-team`, rollkatalog och mål-kö i Linear (se `docs/agent-team/`)
-- ⬜ Brand-anpassning av färger, typsnitt, logo
-- 🟡 Header-redesign för Parfymia: toppfält (USP:ar, genvägar) och sökfält är byggda och granskade. Kvar: inställningar i theme editor och kontroll i butik
+- 🟡 Header-redesign för Parfymia: toppfält (säljargument, genvägar) och sökfält är byggda, granskade och uppladdade till dev-storen som opublicerat tema. Kvar: inställningar i theme editor och kontroll i butik
 - ⬜ Hero/landing
 - ⬜ Kategorinavigation (parfym → dam/herr/nisch, hår, hud, makeup …)
 - ⬜ Produktsida-anpassningar (notes/topnoter/baser för parfym, ingredienser för hudvård etc.)
-- ⬜ Översättning till svenska som primärspråk
+- ⬜ Språk: engelska som primärspråk, svenska som sekundärt — granska svenska översättningen och välj vilka övriga språk som ska vara kvar
 
 (Uppdatera den här listan när uppgifter slutförs.)
