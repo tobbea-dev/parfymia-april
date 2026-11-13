@@ -32,13 +32,27 @@ Fungerar för temakommandon sedan 2026-11-12, i miljön `parfymia-april`:
 
 `AGENTS.md`, `README.md` och hooken anger adressen som Parfymias live-butik. När adressen anropades från molnsessionen den 12 november ledde den vidare till `lilixa.store`. Båda uppgifterna kan inte stämma. Ägaren behöver avgöra vilken som gäller. Tills dess: adressen är spärrad i hooken och borttagen ur miljöns nätverk, så inget kan pushas dit. `kpm6zp-2n.myshopify.com` ska inte användas (ägarens beslut 2026-11-12).
 
+## GOA-4 Startsida (2026-11-13)
+
+- **Byggt:** `templates/index.json` har fem sektioner i ordning: hero (orörd), kategoriingångar, varumärkesrad, bästsäljare, nyheter. Bara befintliga Horizon-sektioner och block. Ingen ny kod, inga locale-ändringar. Körlogg: `docs/agent-team/runs/2026-11-13-GOA-4.md`.
+- **Inte uppladdat.** Temat `Parfymia GOA-3` (`162800009301`) i dev-butiken har fortfarande den gamla startsidan. Uppladdning kräver ägarens godkännande, och den skriver över startsidesinställningar som gjorts i theme editor i det temat.
+- **Inte sett renderat.** Layouten på mobil och dator är slutsats av kodläsning.
+- **Görs i theme editor innan temat publiceras:**
+  1. Hero: bild och kampanjbudskap.
+  2. Fem kategorier: bild, rubrik och länk. Sätt länken på gruppen (rutan), lämna bildens länk tom, annars blir det två klickytor.
+  3. Sex varumärken: logotyp och länk. Alt-text sätts på bildfilen under Innehåll → Filer, annars får länken inget namn för skärmläsare.
+  4. Kollektion för bästsäljare och för nyheter. Båda pekar på `all` och visar samma sak tills dess. Rubriken följer kollektionens namn.
+  5. Texterna är på engelska ("Shop by category", "Our brands", "Perfume" …). Skriv om dem eller översätt i butiken.
+- **Platshållarbilder syns för kunden** tills alla elva bilder är valda.
+- **Känd brist:** när en grupp har länk renderar `snippets/group.liquid` en länk utan text eller `aria-label`. Kräver kodändring och är inte gjord.
+
 ## Nästa steg
 
 1. Pusha branchen till dev-storen som opublicerat tema och titta på startsida, produktsida, kollektion och varukorg i 390/768/1280 px. Gör detta **innan** någon kör `theme pull`.
 2. Bekräfta i förhandsgranskningen att rubrikerna visas i Playfair Display (typsnittsnamnet är kontrollerat mot Shopifys dokumentation, renderingen är inte sedd).
 3. Ladda upp en inverterad logotyp för mörka scheman (theme editor → Logo).
 4. Ta ställning till hörnradier (förslag i `DESIGN.md` → Riktning).
-5. Därefter: header-redesign (PAR-8).
+5. Ladda upp branchen till `Parfymia GOA-3` efter ägarens godkännande, ställ in header (GOA-3) och startsida (GOA-4) i theme editor.
 
 ## Öppna frågor / väntar på människa
 
