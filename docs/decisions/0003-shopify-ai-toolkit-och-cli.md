@@ -25,7 +25,11 @@ Shopify-kopplingen i Claude (connectorn, verktygen `mcp__Shopify__*`) ska **inte
 
 - **Live-butiken.** `6m05q1-6x.myshopify.com` är live-butiken, och hooken `.claude/hooks/guard-bash.mjs` blockerar alla CLI-kommandon mot den. Ska Toolkit-flödet användas där måste spärren ändras, till exempel så att läsning tillåts men `--allow-mutations` och temaskrivningar fortsatt blockeras. Det beslutet är inte fattat.
 - **Inloggning från molnsessioner fungerar inte.** Utrett 2026-11-12 mot dev-butiken: `shopify store auth` skickar webbläsaren tillbaka till `http://127.0.0.1:<port>/auth/callback` på den maskin där CLI:t körs. I en molncontainer når din webbläsare inte den adressen, så inloggningen kan inte slutföras oavsett nätverksinställningar. Med `--no-input` vägrar kommandot helt. `shopify store auth` och `shopify store execute` fungerar därför bara på en egen maskin.
-- **Möjlig väg för temakommandon i molnet.** `shopify theme push/pull` kan köras utan webbläsare med ett Theme Access-lösenord. Det kräver att butikens ägare skapar lösenordet, att det sparas i miljön och att `theme-kit-access.shopifyapps.com` tillåts. Inte provat.
+- **Temakommandon i molnet fungerar med Theme Access.** Provat 2026-11-13 mot dev-butiken `devparfymia.myshopify.com`: `shopify theme list` och `shopify theme push --unpublished` går igenom. Tre saker krävs:
+  1. Ett Theme Access-lösenord för butiken, sparat som nätverkshemlighet i miljön för `theme-kit-access.shopifyapps.com`. Proxyn lägger på det riktiga värdet, så kommandot körs med ett platshållarvärde: `--password shptka_` följt av 32 nollor.
+  2. `theme-kit-access.shopifyapps.com` och butikens adress tillåtna i miljöns nätverk.
+  3. CLI:t styrt genom proxyn: `SHOPIFY_HTTP_PROXY` och `SHOPIFY_HTTPS_PROXY` satta till värdet i `HTTPS_PROXY`, samt `NODE_USE_ENV_PROXY=1` och `NODE_EXTRA_CA_CERTS=/root/.ccr/ca-bundle.crt`. Utan dem misslyckas CLI:t med `ENOTFOUND`.
+- **Förhandsgranskning i molnet fungerar inte än.** Dev-butikens skyltfönster är lösenordsskyddat, så förhandsgranskningslänken leder till lösenordssidan. Skärmdumpar kräver att skyddet stängs av på dev-butiken eller att lösenordet sparas i miljön.
 - **Nätverk.** I miljön `parfymia-april` nås dev-butiken, Shopifys CDN och sedan 2026-11-12 `shopify.dev`. `accounts.shopify.com`, `admin.shopify.com`, `partners.shopify.com`, `dev.shopify.com` och `theme-kit-access.shopifyapps.com` nås inte.
 
 ## AI Toolkits dokumentsökning i molnsessioner

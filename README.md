@@ -8,7 +8,7 @@ Temat är en fork av Shopifys **Horizon**-tema (export från `www-parfymia-com-c
 
 | Miljö | Store | Användning |
 |---|---|---|
-| Dev | `dev-parfymia.myshopify.com` | All utveckling och förhandsvisning |
+| Dev | `devparfymia.myshopify.com` | All utveckling och förhandsvisning |
 | Prod | `www.parfymia.com` (`6m05q1-6x.myshopify.com`) | Live butik — pusha aldrig direkt hit |
 
 ## Komma igång
@@ -35,7 +35,7 @@ shopify version
 
 ### 3. Logga in på dev-storen
 ```bash
-shopify auth login --store=dev-parfymia.myshopify.com
+shopify auth login --store=devparfymia.myshopify.com
 ```
 Browsern öppnas — godkänn access.
 
@@ -43,20 +43,20 @@ Browsern öppnas — godkänn access.
 
 ### Live preview med hot-reload
 ```bash
-shopify theme dev --store=dev-parfymia.myshopify.com
+shopify theme dev --store=devparfymia.myshopify.com
 ```
 Öppnar en lokal preview-URL. Ändringar i `assets/`, `sections/`, `blocks/`, `snippets/`, `templates/` reflekteras direkt i browsern.
 
 ### Pusha till dev-storen som ett "unpublished theme"
 ```bash
-shopify theme push --store=dev-parfymia.myshopify.com --unpublished --theme="Parfymia WIP"
+shopify theme push --store=devparfymia.myshopify.com --unpublished --theme="Parfymia WIP"
 ```
 Skapar/uppdaterar ett tema vid namn "Parfymia WIP" utan att publicera. Använd det här för att testa fullständiga rendering-paths som kassa, kollektionsfilter etc. som inte alltid funkar i `theme dev`.
 
 ### Hämta ändringar gjorda i Shopify-admin tillbaka till repot
 Om någon redigerar i Shopify-admin (t.ex. theme settings, mall-ändringar), hämta dem så de hamnar i git:
 ```bash
-shopify theme pull --store=dev-parfymia.myshopify.com --theme="Parfymia WIP"
+shopify theme pull --store=devparfymia.myshopify.com --theme="Parfymia WIP"
 ```
 Granska diff:en, committa det som ska sparas.
 

@@ -16,7 +16,7 @@ Basen är **Shopify Horizon-temat** (Online Store 2.0). Vi anpassar gradvis utan
 
 ## Stores
 
-- **Dev**: `dev-parfymia.myshopify.com` — fri lekplats, pusha hit gärna
+- **Dev**: `devparfymia.myshopify.com` — fri lekplats, pusha hit gärna
 - **Prod**: `www.parfymia.com` (myshopify-adress: `6m05q1-6x.myshopify.com`) — *aldrig* direkt-push, alltid via `prod`-branch och backup först
 
 ## Verktyg
@@ -27,9 +27,9 @@ Arbete mot Shopify görs med **Shopify AI Toolkit** (MCP-servern `shopify-dev` i
 
 Se `README.md` för fullständigt setup. Nyckelkommandon:
 ```bash
-shopify theme dev --store=dev-parfymia.myshopify.com           # live preview
-shopify theme push --store=dev-parfymia.myshopify.com --unpublished --theme="Parfymia WIP"
-shopify theme pull --store=dev-parfymia.myshopify.com --theme="Parfymia WIP"
+shopify theme dev --store=devparfymia.myshopify.com           # live preview
+shopify theme push --store=devparfymia.myshopify.com --unpublished --theme="Parfymia WIP"
+shopify theme pull --store=devparfymia.myshopify.com --theme="Parfymia WIP"
 ```
 
 ## Verifiering
@@ -101,7 +101,7 @@ Aldrig commit direkt till `main` eller `prod`. Alltid PR.
 - ✅ Initial baseline från Horizon-export importerad (commit `9a78eff`)
 - ✅ Agent-setup: regler, hooks, permissions, kontroller, CI, kunskapsbas (se `docs/decisions/0001-claude-setup.md`)
 - 🟡 Brand-anpassning: färger och rubriktypsnitt klara (se `DESIGN.md`, `docs/decisions/0002-brand-farger-och-typsnitt.md`). Kvar: inverterad logo, verifiering på dev-storen
-- ⬜ Header-redesign för Parfymia
+- 🟡 Header-redesign: layout, annonsrad och menytypografi inställda (se `DESIGN.md` → Header). Kvar: förhandsgranskning, annonsradens text, inverterad logo
 - ⬜ Hero/landing
 - ⬜ Kategorinavigation (parfym → dam/herr/nisch, hår, hud, makeup …)
 - ⬜ Produktsida-anpassningar (notes/topnoter/baser för parfym, ingredienser för hudvård etc.)
