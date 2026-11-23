@@ -1,0 +1,814 @@
+diff --git a/blocks/_shortcut-link.liquid b/blocks/_shortcut-link.liquid
+new file mode 100644
+index 0000000..4679c7d
+--- /dev/null
++++ b/blocks/_shortcut-link.liquid
+@@ -0,0 +1,78 @@
++{%- liquid
++  assign shortcut_text = block.settings.text | strip
++  assign shortcut_class = 'header-topbar__shortcut'
++
++  if block.settings.highlight
++    assign shortcut_class = shortcut_class | append: ' header-topbar__shortcut--highlight'
++  endif
++-%}
++
++{%- if shortcut_text != blank -%}
++  {%- if block.settings.link != blank -%}
++    <a
++      href="{{ block.settings.link }}"
++      class="{{ shortcut_class }} header-topbar__shortcut--link"
++      {{ block.shopify_attributes }}
++    >
++      {{- shortcut_text | escape -}}
++    </a>
++  {%- else -%}
++    <span
++      class="{{ shortcut_class }}"
++      {{ block.shopify_attributes }}
++    >
++      {{- shortcut_text | escape -}}
++    </span>
++  {%- endif -%}
++{%- endif -%}
++
++{% stylesheet %}
++  .header-topbar__shortcut {
++    /* Shortcut links sit after the selling points, whatever the block order is */
++    order: 3;
++    flex-shrink: 0;
++    color: var(--color-foreground);
++    text-decoration: none;
++  }
++
++  .header-topbar__shortcut--link:hover {
++    text-decoration: underline;
++    text-underline-offset: var(--padding-2xs);
++  }
++
++  .header-topbar__shortcut--highlight {
++    text-decoration: underline;
++    text-underline-offset: var(--padding-2xs);
++  }
++{% endstylesheet %}
++
++{% schema %}
++{
++  "name": "t:names.shortcut_link",
++  "tag": null,
++  "settings": [
++    {
++      "type": "text",
++      "id": "text",
++      "label": "t:settings.text",
++      "default": "t:text_defaults.learn_more"
++    },
++    {
++      "type": "url",
++      "id": "link",
++      "label": "t:settings.link"
++    },
++    {
++      "type": "checkbox",
++      "id": "highlight",
++      "label": "t:settings.highlight",
++      "default": false
++    }
++  ],
++  "presets": [
++    {
++      "name": "t:names.shortcut_link"
++    }
++  ]
++}
++{% endschema %}
+diff --git a/blocks/_usp-item.liquid b/blocks/_usp-item.liquid
+new file mode 100644
+index 0000000..64472cd
+--- /dev/null
++++ b/blocks/_usp-item.liquid
+@@ -0,0 +1,322 @@
++{%- liquid
++  assign usp_text = block.settings.text | strip
++  assign usp_icon = block.settings.icon
++-%}
++
++{%- if usp_text != blank or usp_icon != 'none' -%}
++  {%- capture usp_content -%}
++    {%- render 'icon-or-image', icon: usp_icon, image_upload: block.settings.image_upload, width: 16, class_name: 'header-topbar__usp-icon' -%}
++    {%- if usp_text != blank -%}
++      <span class="header-topbar__usp-text">{{ usp_text | escape }}</span>
++    {%- endif -%}
++  {%- endcapture -%}
++
++  {%- if block.settings.link != blank -%}
++    <a
++      href="{{ block.settings.link }}"
++      class="header-topbar__usp header-topbar__usp--link"
++      {{ block.shopify_attributes }}
++    >
++      {{- usp_content -}}
++    </a>
++  {%- else -%}
++    <div
++      class="header-topbar__usp"
++      {{ block.shopify_attributes }}
++    >
++      {{- usp_content -}}
++    </div>
++  {%- endif -%}
++{%- endif -%}
++
++{% stylesheet %}
++  .header-topbar__usp {
++    /* Selling points sit before the shortcut links, whatever the block order is */
++    order: 1;
++    display: flex;
++    flex-shrink: 0;
++    align-items: center;
++    gap: var(--gap-2xs);
++    color: var(--color-foreground);
++    text-decoration: none;
++  }
++
++  .header-topbar__usp--link:hover .header-topbar__usp-text {
++    text-decoration: underline;
++    text-underline-offset: var(--padding-2xs);
++  }
++
++  .header-topbar__usp-icon {
++    flex-shrink: 0;
++    width: var(--icon-size-xs);
++    height: var(--icon-size-xs);
++  }
++{% endstylesheet %}
++
++{% schema %}
++{
++  "name": "t:names.usp_item",
++  "tag": null,
++  "settings": [
++    {
++      "type": "select",
++      "id": "icon",
++      "label": "t:settings.icon",
++      "options": [
++        {
++          "value": "none",
++          "label": "t:options.none"
++        },
++        {
++          "value": "apple",
++          "label": "t:options.apple"
++        },
++        {
++          "value": "arrow",
++          "label": "t:options.arrow"
++        },
++        {
++          "value": "banana",
++          "label": "t:options.banana"
++        },
++        {
++          "value": "bottle",
++          "label": "t:options.bottle"
++        },
++        {
++          "value": "box",
++          "label": "t:options.box"
++        },
++        {
++          "value": "carrot",
++          "label": "t:options.carrot"
++        },
++        {
++          "value": "chat_bubble",
++          "label": "t:options.chat_bubble"
++        },
++        {
++          "value": "check_box",
++          "label": "t:options.check_box"
++        },
++        {
++          "value": "clipboard",
++          "label": "t:options.clipboard"
++        },
++        {
++          "value": "dairy",
++          "label": "t:options.dairy"
++        },
++        {
++          "value": "dairy_free",
++          "label": "t:options.dairy_free"
++        },
++        {
++          "value": "dryer",
++          "label": "t:options.dryer"
++        },
++        {
++          "value": "eye",
++          "label": "t:options.eye"
++        },
++        {
++          "value": "fire",
++          "label": "t:options.fire"
++        },
++        {
++          "value": "gluten_free",
++          "label": "t:options.gluten_free"
++        },
++        {
++          "value": "heart",
++          "label": "t:options.heart"
++        },
++        {
++          "value": "iron",
++          "label": "t:options.iron"
++        },
++        {
++          "value": "leaf",
++          "label": "t:options.leaf"
++        },
++        {
++          "value": "leather",
++          "label": "t:options.leather"
++        },
++        {
++          "value": "lightning_bolt",
++          "label": "t:options.lightning_bolt"
++        },
++        {
++          "value": "lipstick",
++          "label": "t:options.lipstick"
++        },
++        {
++          "value": "lock",
++          "label": "t:options.lock"
++        },
++        {
++          "value": "map_pin",
++          "label": "t:options.map_pin"
++        },
++        {
++          "value": "nut_free",
++          "label": "t:options.nut_free"
++        },
++        {
++          "value": "pants",
++          "label": "t:options.pants"
++        },
++        {
++          "value": "paw_print",
++          "label": "t:options.paw_print"
++        },
++        {
++          "value": "pepper",
++          "label": "t:options.pepper"
++        },
++        {
++          "value": "perfume",
++          "label": "t:options.perfume"
++        },
++        {
++          "value": "plane",
++          "label": "t:options.plane"
++        },
++        {
++          "value": "plant",
++          "label": "t:options.plant"
++        },
++        {
++          "value": "price_tag",
++          "label": "t:options.price_tag"
++        },
++        {
++          "value": "question_mark",
++          "label": "t:options.question_mark"
++        },
++        {
++          "value": "recycle",
++          "label": "t:options.recycle"
++        },
++        {
++          "value": "return",
++          "label": "t:options.return"
++        },
++        {
++          "value": "ruler",
++          "label": "t:options.ruler"
++        },
++        {
++          "value": "serving_dish",
++          "label": "t:options.serving_dish"
++        },
++        {
++          "value": "shirt",
++          "label": "t:options.shirt"
++        },
++        {
++          "value": "shoe",
++          "label": "t:options.shoe"
++        },
++        {
++          "value": "silhouette",
++          "label": "t:options.silhouette"
++        },
++        {
++          "value": "bluesky",
++          "label": "t:options.social_bluesky"
++        },
++        {
++          "value": "facebook",
++          "label": "t:options.social_facebook"
++        },
++        {
++          "value": "instagram",
++          "label": "t:options.social_instagram"
++        },
++        {
++          "value": "linkedin",
++          "label": "t:options.social_linkedin"
++        },
++        {
++          "value": "pinterest",
++          "label": "t:options.social_pinterest"
++        },
++        {
++          "value": "snapchat",
++          "label": "t:options.social_snapchat"
++        },
++        {
++          "value": "spotify",
++          "label": "t:options.social_spotify"
++        },
++        {
++          "value": "threads",
++          "label": "t:options.social_threads"
++        },
++        {
++          "value": "tiktok",
++          "label": "t:options.social_tiktok"
++        },
++        {
++          "value": "tumblr",
++          "label": "t:options.social_tumblr"
++        },
++        {
++          "value": "twitter",
++          "label": "t:options.social_twitter"
++        },
++        {
++          "value": "vimeo",
++          "label": "t:options.social_vimeo"
++        },
++        {
++          "value": "youtube",
++          "label": "t:options.social_youtube"
++        },
++        {
++          "value": "whatsapp",
++          "label": "t:options.social_whatsapp"
++        },
++        {
++          "value": "snowflake",
++          "label": "t:options.snowflake"
++        },
++        {
++          "value": "star",
++          "label": "t:options.star"
++        },
++        {
++          "value": "stopwatch",
++          "label": "t:options.stopwatch"
++        },
++        {
++          "value": "truck",
++          "label": "t:options.truck"
++        },
++        {
++          "value": "washing",
++          "label": "t:options.washing"
++        }
++      ],
++      "default": "truck"
++    },
++    {
++      "type": "text",
++      "id": "text",
++      "label": "t:settings.text"
++    },
++    {
++      "type": "url",
++      "id": "link",
++      "label": "t:settings.link"
++    }
++  ],
++  "presets": [
++    {
++      "name": "t:names.usp_item"
++    }
++  ]
++}
++{% endschema %}
+diff --git a/locales/en.default.schema.json b/locales/en.default.schema.json
+index d0a5a83..e0f5fb6 100644
+--- a/locales/en.default.schema.json
++++ b/locales/en.default.schema.json
+@@ -228,6 +228,7 @@
+     "logo_height": "Only affects header logo",
+     "manage_countries_regions": "[Manage countries/regions](/admin/settings/markets)",
+     "manage_languages": "[Manage languages](/admin/settings/languages)",
++    "search_display": "The search field shows on desktop only. Mobile and touch screens keep the icon.",
+     "transparent_background": "Review each template where transparent background is applied for readability",
+     "video_alt_text": "Describe the video for assistive tech users",
+     "video_autoplay": "Videos will be muted by default",
+@@ -320,6 +321,7 @@
+     // Layout container block that groups other content
+     "group": "Group",
+     "header": "Header",
++    "header_topbar": "Top bar",
+     "heading": "Heading",
+     "hero": "Hero",
+     "hero_bottom_aligned": "Hero: Bottom aligned",
+@@ -403,6 +405,7 @@
+     "secondary_button": "Secondary button",
+     "section": "Section",
+     "selected_variants": "Selected variants",
++    "shortcut_link": "Shortcut link",
+     "size": "Size",
+     "slide": "Slide",
+     "slideshow": "Slideshow",
+@@ -426,6 +429,7 @@
+     "text": "Text",
+     "title": "Title",
+     "typography": "Typography",
++    "usp_item": "Selling point",
+     "utilities": "Utilities",
+     "policies_and_links": "Policies and links",
+     "variant_pickers": "Variant pickers",
+@@ -665,6 +669,7 @@
+     "ruler": "Ruler",
+     "s": "S",
+     "scale": "Scale",
++    "search_field": "Search field",
+     "secondary": "Secondary",
+     "secondary_style": "Secondary style",
+     "semibold": "Semibold",
+@@ -895,6 +900,7 @@
+     // Checkbox to hide padding control settings
+     "hide_padding": "Hide padding",
+     "hide_unselected_variant_media": "Hide unselected variant media",
++    "highlight": "Highlight link",
+     "horizontal_gap": "Horizontal gap",
+     "hotspot_color": "Hotspot color",
+     "horizontal_offset": "Shadow horizontal offset",
+@@ -1059,6 +1065,7 @@
+     "row": "Row",
+     "scroll_speed": "Time to next announcement",
+     "search": "Search",
++    "search_display": "Search display on desktop",
+     "search_icon": "Search icon",
+     // Setting for search bar placement in header
+     "search_position": "Position",
+@@ -1198,6 +1205,7 @@
+     "new_arrivals": "New arrivals",
+     "popup_link": "Popup link",
+     "return_policy": "Return policy",
++    "secure_payment": "Secure payment",
+     "shipping": "Shipping",
+     "shop_now_button_label": "Shop now",
+     "shop_our_latest_arrivals": "Shop our latest arrivals!",
+diff --git a/locales/sv.schema.json b/locales/sv.schema.json
+index e581c09..3c3cfd0 100644
+--- a/locales/sv.schema.json
++++ b/locales/sv.schema.json
+@@ -74,6 +74,7 @@
+     "footer_utilities": "Sidfotsverktyg",
+     "group": "Grupp",
+     "header": "Sidhuvud",
++    "header_topbar": "Toppfält",
+     "heading": "Rubrik",
+     "icons": "Ikoner",
+     "image_with_text": "Bild med text",
+@@ -103,6 +104,7 @@
+     "search": "Sök",
+     "section": "Sektion",
+     "selected_variants": "Valda varianter",
++    "shortcut_link": "Genvägslänk",
+     "slide": "Bild",
+     "social_media_links": "Länkar till sociala medier",
+     "spacer": "Avstånd",
+@@ -112,6 +114,7 @@
+     "testimonials": "Kundomdömen",
+     "text": "Text",
+     "title": "Rubrik",
++    "usp_item": "Säljargument",
+     "utilities": "Verktyg",
+     "search_input": "Sökinmatning",
+     "search_results": "Sökresultat",
+@@ -478,6 +481,7 @@
+     "divider_width": "Avgränsarens bredd",
+     "headings": "Rubriker",
+     "hide_logo_on_home_page": "Dölj logotypen på startsidan",
++    "highlight": "Framhäv länk",
+     "inverse": "Inverterad",
+     "inverse_logo": "Inverterad logotyp",
+     "layout_style": "Stil",
+@@ -491,6 +495,7 @@
+     "product_title_case": "Skiftläge för produktnamn",
+     "right_padding": "Utfyllnad till höger",
+     "search": "Sök",
++    "search_display": "Sökvisning på dator",
+     "search_icon": "Sökikon",
+     "search_position": "Position",
+     "search_row": "Rad",
+@@ -758,6 +763,7 @@
+     "heading_regular": "Rubrik (Normal)",
+     "heading_small": "Rubrik (Liten)",
+     "icon": "Ikon",
++    "search_field": "Sökfält",
+     "image": "Bild",
+     "input": "Inmatningsfält",
+     "inside_carousel": "Inuti karusell",
+@@ -1051,6 +1057,7 @@
+     "manufacturing": "Tillverkning",
+     "materials": "Material",
+     "return_policy": "Returpolicy",
++    "secure_payment": "Säker betalning",
+     "shipping": "Frakt",
+     "shop_now_button_label": "Handla nu",
+     "sign_up_button_label": "Registrera dig",
+@@ -1080,6 +1087,7 @@
+     "logo_font": "Gäller endast när en logotyp inte är vald",
+     "manage_countries_regions": "[Hantera länder/regioner](/admin/settings/markets)",
+     "manage_languages": "[Hantera språk](/admin/settings/languages)",
++    "search_display": "Sökfältet visas bara på dator. Mobil och pekskärm behåller ikonen.",
+     "transparent_background": "Granska varje mall där transparent bakgrund används för läsbarhet",
+     "aspect_ratio_adjusted": "Justeras i vissa layouter",
+     "custom_liquid": "Lägg till appfragment eller annan kod för att skapa avancerade anpassningar. [Läs mer](https://shopify.dev/docs/api/liquid)",
+diff --git a/sections/header-topbar.liquid b/sections/header-topbar.liquid
+new file mode 100644
+index 0000000..9fa569a
+--- /dev/null
++++ b/sections/header-topbar.liquid
+@@ -0,0 +1,149 @@
++<div class="section-background color-{{ section.settings.color_scheme }}"></div>
++<aside
++  class="header-topbar spacing-style section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
++  style="{% render 'spacing-padding', settings: section.settings %}"
++>
++  <div class="header-topbar__list">
++    {% content_for 'blocks' %}
++  </div>
++</aside>
++
++{% stylesheet %}
++  .header-topbar__list {
++    display: flex;
++    align-items: center;
++    gap: var(--gap-xs) var(--gap-xl);
++    min-width: 0;
++    color: var(--color-foreground);
++    font-family: var(--font-body--family);
++    font-size: var(--font-size--xs);
++  }
++
++  /* Small screens: one row that scrolls sideways, nothing wraps */
++  @media screen and (max-width: 749px) {
++    .header-topbar__list {
++      flex-wrap: nowrap;
++      white-space: nowrap;
++      overflow-x: auto;
++      overscroll-behavior-x: contain;
++      scrollbar-width: none;
++    }
++
++    .header-topbar__list::-webkit-scrollbar {
++      display: none;
++    }
++  }
++
++  /* From 750px: selling points left, shortcut links right.
++     The blocks set their own `order` (1 and 3), so the split does not depend on block order in the editor.
++     The pseudo-element sits between them and takes the free space. */
++  @media screen and (min-width: 750px) {
++    .header-topbar__list {
++      flex-wrap: wrap;
++    }
++
++    .header-topbar__list::before {
++      content: '';
++      order: 2;
++      margin-inline-start: auto;
++    }
++  }
++{% endstylesheet %}
++
++{% schema %}
++{
++  "name": "t:names.header_topbar",
++  "blocks": [
++    {
++      "type": "_usp-item"
++    },
++    {
++      "type": "_shortcut-link"
++    }
++  ],
++  "enabled_on": {
++    "groups": ["header"]
++  },
++  "settings": [
++    {
++      "type": "header",
++      "content": "t:content.appearance"
++    },
++    {
++      "type": "select",
++      "id": "section_width",
++      "label": "t:settings.section_width",
++      "options": [
++        {
++          "value": "page-width",
++          "label": "t:options.page"
++        },
++        {
++          "value": "full-width",
++          "label": "t:options.full"
++        }
++      ],
++      "default": "page-width"
++    },
++    {
++      "type": "color_scheme",
++      "id": "color_scheme",
++      "default": "scheme-1",
++      "label": "t:settings.color_scheme"
++    },
++    {
++      "type": "header",
++      "content": "t:content.padding"
++    },
++    {
++      "type": "range",
++      "id": "padding-block-start",
++      "label": "t:settings.top",
++      "min": 0,
++      "max": 100,
++      "step": 1,
++      "unit": "px",
++      "default": 8
++    },
++    {
++      "type": "range",
++      "id": "padding-block-end",
++      "label": "t:settings.bottom",
++      "min": 0,
++      "max": 100,
++      "step": 1,
++      "unit": "px",
++      "default": 8
++    }
++  ],
++  "presets": [
++    {
++      "name": "t:names.header_topbar",
++      "blocks": {
++        "usp_1": {
++          "type": "_usp-item",
++          "settings": {
++            "icon": "truck",
++            "text": "t:text_defaults.shipping"
++          }
++        },
++        "usp_2": {
++          "type": "_usp-item",
++          "settings": {
++            "icon": "return",
++            "text": "t:text_defaults.return_policy"
++          }
++        },
++        "usp_3": {
++          "type": "_usp-item",
++          "settings": {
++            "icon": "lock",
++            "text": "t:text_defaults.secure_payment"
++          }
++        }
++      },
++      "block_order": ["usp_1", "usp_2", "usp_3"]
++    }
++  ]
++}
++{% endschema %}
+diff --git a/sections/header.liquid b/sections/header.liquid
+index 93e3e5e..ed07c53 100644
+--- a/sections/header.liquid
++++ b/sections/header.liquid
+@@ -99,7 +99,7 @@
+     endif
+   endif
+   capture search
+-    render 'search', style: search_style, class: search_class, display_style: section.settings.actions_display_style
++    render 'search', style: search_style, class: search_class, display_style: section.settings.actions_display_style, search_display: section.settings.search_display
+   endcapture
+ 
+   # Skip drawer search under specific conditions:
+@@ -1218,6 +1218,24 @@
+       "label": "t:settings.search_icon",
+       "default": true
+     },
++    {
++      "type": "select",
++      "id": "search_display",
++      "label": "t:settings.search_display",
++      "info": "t:info.search_display",
++      "options": [
++        {
++          "value": "icon",
++          "label": "t:options.icon"
++        },
++        {
++          "value": "field",
++          "label": "t:options.search_field"
++        }
++      ],
++      "default": "icon",
++      "visible_if": "{{ section.settings.show_search }}"
++    },
+     {
+       "type": "select",
+       "id": "search_position",
+diff --git a/snippets/search.liquid b/snippets/search.liquid
+index c770b77..6ec3849 100644
+--- a/snippets/search.liquid
++++ b/snippets/search.liquid
+@@ -4,6 +4,7 @@
+   @param {string} [style] - The style of the search action.
+   @param {string} [class] - Additional classes for the search action.
+   @param {string} [display_style] - The display style ('icon' or 'text').
++  @param {string} [search_display] - 'icon' (default) or 'field'.
+ 
+   @example
+   {% render 'search', style: 'default', class: 'custom-class', display_style: 'icon' %}
+@@ -11,7 +12,7 @@
+ 
+ {% unless style == 'none' %}
+   <search-button
+-    class="search-action{% if display_style == 'text' %} search-action--text{% endif %}{% if class != blank %} {{ class | strip }}{% endif %}"
++    class="search-action{% if display_style == 'text' %} search-action--text{% endif %}{% if search_display == 'field' %} search-action--field{% endif %}{% if class != blank %} {{ class | strip }}{% endif %}"
+   >
+     <button
+       on:click="#search-modal/showDialog"
+@@ -27,6 +28,16 @@
+         {{ 'icon-search.svg' | inline_asset_content }}
+       </span>
+     </button>
++    {%- if search_display == 'field' -%}
++      <button type="button" class="button-unstyled search-action__field" on:click="#search-modal/showDialog" aria-label="{{ 'content.search_input_label' | t }}" aria-haspopup="dialog">
++        <span class="svg-wrapper search-action__field-icon">
++          {{- 'icon-search.svg' | inline_asset_content -}}
++        </span>
++        <span class="search-action__field-text">
++          {{- 'content.search_input_placeholder' | t -}}
++        </span>
++      </button>
++    {%- endif %}
+   </search-button>
+ {% endunless %}
+ 
+@@ -75,4 +86,34 @@
+       margin-inline: 0;
+     }
+   }
++
++  /* Open search field (search_display: 'field').
++     Hidden by default: on mobile, in drawer mode, and before JS has set data-menu-style. */
++  .search-action .search-action__field {
++    display: none;
++  }
++
++  @media screen and (min-width: 750px) {
++    [data-menu-style='menu'] .search-action--field .search-action__field {
++      display: flex;
++      align-items: center;
++      gap: var(--gap-xs);
++      height: var(--button-size-md);
++      min-width: calc(var(--button-size) * 4);
++      padding-inline: var(--padding-md);
++      border: var(--search-border-width) solid var(--color-border);
++      border-radius: var(--search-border-radius);
++      color: var(--color-foreground);
++      cursor: pointer;
++    }
++
++    [data-menu-style='menu'] .search-action--field .header-actions__action {
++      display: none;
++    }
++
++    [data-menu-style='menu'] .header__column--right .search-action--field,
++    [data-menu-style='menu'] .header__column--left .search-action--field {
++      margin-inline: 0;
++    }
++  }
+ {% endstylesheet %}

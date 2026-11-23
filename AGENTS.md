@@ -17,6 +17,7 @@ Basen är **Shopify Horizon-temat** (Online Store 2.0). Vi anpassar gradvis utan
 ## Stores
 
 - **Dev**: `dev-parfymia.myshopify.com` — fri lekplats, pusha hit gärna
+  - Permanent adress för Shopify CLI med Theme Access-lösenord: `devparfymia.myshopify.com` (utan bindestreck). `dev-parfymia` fungerar i webbläsaren men avvisas av CLI.
 - **Prod**: `www.parfymia.com` (myshopify-adress: `6m05q1-6x.myshopify.com`) — *aldrig* direkt-push, alltid via `prod`-branch och backup först
 
 ## Verktyg
@@ -96,14 +97,23 @@ Aldrig commit direkt till `main` eller `prod`. Alltid PR.
 - Lägga till nya npm-deps eller build-steg utan diskussion — temat är medvetet build-fritt
 - Ändra `config/settings_data.json` manuellt — det filet uppdateras av theme editor och konflikter blir röriga
 
+## Agentteam
+
+- **Mål:** ligger som ärenden i Linear-teamet Goal (`GOA`). Teamet flyttar status till In Progress och In Review. Done sätts när PR:en är mergad.
+- **Agentteam:** `/agent-team GOA-<nr>` kör planering, implementation, test, oberoende granskning och dokumentation. Sju agenter finns i `.claude/agents/`, alla 30 rollkontrakt i `docs/agent-team/roles.md`.
+- **Autonomi:** Supervised. Teamet arbetar på feature-branch och öppnar draft-PR. Merge och all push till butik godkänns av en människa.
+- **Minne och loggar:** `docs/agent-team/` (baslinje, minne, körningar, referensuppgifter, förbättringslogg).
+- **Rör inte utan godkännande:** `scripts/`, `.theme-check.yml`, `.claude/settings.json`, `.claude/hooks/`. Det är utvärderingsregler och spärrar.
+
 ## Aktuell status
 
 - ✅ Initial baseline från Horizon-export importerad (commit `9a78eff`)
 - ✅ Agent-setup: regler, hooks, permissions, kontroller, CI, kunskapsbas (se `docs/decisions/0001-claude-setup.md`)
 - 🟡 Brand-anpassning: färger och rubriktypsnitt klara (se `DESIGN.md`, `docs/decisions/0002-brand-farger-och-typsnitt.md`). Kvar: inverterad logo, verifiering på dev-storen
-- ⬜ Header-redesign för Parfymia
-- ⬜ Hero/landing
-- ⬜ Kategorinavigation (parfym → dam/herr/nisch, hår, hud, makeup …)
+- ✅ Agentteam: sju agenter, `/agent-team`, rollkatalog och mål-kö i Linear (se `docs/agent-team/`)
+- 🟡 Header-redesign för Parfymia: toppfält (säljargument, genvägar) och sökfält är byggda, granskade och uppladdade till dev-storen som opublicerat tema. Kvar: inställningar i theme editor och kontroll i butik
+- 🟡 Hero/landing: startsidans mall är byggd och granskad (hero, kategoriingångar, varumärkesrad, bästsäljare, nyheter), se `docs/agent-team/runs/2026-11-13-GOA-4.md`. Kvar: bilder, texter, länkar och kollektioner i theme editor, och kontroll i butik
+- 🟡 Kategorinavigation: menyn byggs från butikens navigation (Horizon). Fem tillgänglighetsbrister i meny och mobillåda är rättade och granskade, se `docs/agent-team/runs/2026-11-13-GOA-5.md`. Kvar: lägga in menyn i Shopify admin, inställningar i theme editor och kontroll i butik
 - ⬜ Produktsida-anpassningar (notes/topnoter/baser för parfym, ingredienser för hudvård etc.)
 - ⬜ Språk: engelska som primärspråk, svenska som sekundärt — granska svenska översättningen och välj vilka övriga språk som ska vara kvar
 

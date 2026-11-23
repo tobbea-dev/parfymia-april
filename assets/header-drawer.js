@@ -113,6 +113,13 @@ class HeaderDrawer extends Component {
 
     if (!summary) return;
 
+    // Parfymia GOA-5: read where focus is before anything is hidden. Focus returns to the opener when it is inside
+    // the menu that closes, or nowhere (after a click on the backdrop). Focus that is somewhere else is left alone.
+    const focused = document.activeElement;
+    const restoreFocus =
+      details.hasAttribute('open') &&
+      (details.contains(focused) || (details === this.refs.details && (!focused || focused === document.body)));
+
     summary.setAttribute('aria-expanded', 'false');
     details.classList.remove('menu-open');
     this.refs.menuDrawer.classList.remove('menu-drawer--has-submenu-opened');
@@ -124,6 +131,10 @@ class HeaderDrawer extends Component {
     onAnimationEnd(
       drawer || details,
       () => {
+        // Parfymia GOA-5: focus may have moved during the transition, so read it again
+        const current = document.activeElement;
+        const focusStillHere = !current || current === document.body || details.contains(current);
+
         reset(details);
         if (details === this.refs.details) {
           removeTrapFocus();
@@ -131,6 +142,10 @@ class HeaderDrawer extends Component {
           openDetails.forEach(reset);
         } else {
           trapFocus(this.refs.details);
+        }
+
+        if (restoreFocus && focusStillHere) {
+          summary.focus();
         }
       },
       { subtree: false }
