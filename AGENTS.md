@@ -17,7 +17,11 @@ Basen är **Shopify Horizon-temat** (Online Store 2.0). Vi anpassar gradvis utan
 ## Stores
 
 - **Dev**: `dev-parfymia.myshopify.com` — fri lekplats, pusha hit gärna
-- **Prod**: `www.parfymia.com` — *aldrig* direkt-push, alltid via `prod`-branch och backup först
+- **Prod**: `www.parfymia.com` (myshopify-adress: `6m05q1-6x.myshopify.com`) — *aldrig* direkt-push, alltid via `prod`-branch och backup först
+
+## Verktyg
+
+Arbete mot Shopify görs med **Shopify AI Toolkit** (MCP-servern `shopify-dev` i `.mcp.json`) för fakta och validering, och **Shopify CLI** för att utföra. Shopify-kopplingen i Claude (connectorn, `mcp__Shopify__*`) används **inte**. Beslut och öppna frågor: `docs/decisions/0003-shopify-ai-toolkit-och-cli.md`.
 
 ## Hur man kör
 
@@ -27,6 +31,23 @@ shopify theme dev --store=dev-parfymia.myshopify.com           # live preview
 shopify theme push --store=dev-parfymia.myshopify.com --unpublished --theme="Parfymia WIP"
 shopify theme pull --store=dev-parfymia.myshopify.com --theme="Parfymia WIP"
 ```
+
+## Verifiering
+
+Kör innan du säger att något är klart, och innan PR:
+```bash
+scripts/verify.sh
+```
+Den kontrollerar JSON-syntax, att `sv` och `en` har samma översättningsnycklar, och kör `shopify theme check` (fel fäller, varningar visas). Samma skript körs i GitHub Actions på varje PR.
+
+## Kunskapsbas
+
+| Fil | Innehåll |
+|---|---|
+| `DESIGN.md` | Färgscheman, typografi, hörnradier — nuläge och Parfymias riktning |
+| `HANDOFF.md` | Var senaste sessionen slutade, nästa steg, öppna frågor |
+| `docs/decisions/` | Beslut och varför de togs |
+| `.claude/` | Skills, hooks och permissions för Claude Code |
 
 ## Konventioner
 
@@ -49,7 +70,7 @@ shopify theme pull --store=dev-parfymia.myshopify.com --theme="Parfymia WIP"
 - För stora bilder (hero, kategoribanner) — låt theme-editorn äga dem som `image_picker`-settings istället för att lägga in i `assets/`.
 
 ### Översättningar
-- Primärspråk: **svenska (sv)**. Sekundär: engelska (en).
+- Primärspråk: **engelska (en)** — `locales/en.default.json` är temats standardfil. Sekundär: svenska (sv).
 - Alla nya strängar ska in i båda `locales/sv.json` och `locales/en.default.json`.
 
 ## Branch-strategi
@@ -78,11 +99,12 @@ Aldrig commit direkt till `main` eller `prod`. Alltid PR.
 ## Aktuell status
 
 - ✅ Initial baseline från Horizon-export importerad (commit `9a78eff`)
-- ⬜ Brand-anpassning av färger, typsnitt, logo
+- ✅ Agent-setup: regler, hooks, permissions, kontroller, CI, kunskapsbas (se `docs/decisions/0001-claude-setup.md`)
+- 🟡 Brand-anpassning: färger och rubriktypsnitt klara (se `DESIGN.md`, `docs/decisions/0002-brand-farger-och-typsnitt.md`). Kvar: inverterad logo, verifiering på dev-storen
 - ⬜ Header-redesign för Parfymia
 - ⬜ Hero/landing
 - ⬜ Kategorinavigation (parfym → dam/herr/nisch, hår, hud, makeup …)
 - ⬜ Produktsida-anpassningar (notes/topnoter/baser för parfym, ingredienser för hudvård etc.)
-- ⬜ Översättning till svenska som primärspråk
+- ⬜ Språk: engelska som primärspråk, svenska som sekundärt — granska svenska översättningen och välj vilka övriga språk som ska vara kvar
 
 (Uppdatera den här listan när uppgifter slutförs.)

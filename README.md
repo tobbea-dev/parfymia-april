@@ -9,7 +9,7 @@ Temat är en fork av Shopifys **Horizon**-tema (export från `www-parfymia-com-c
 | Miljö | Store | Användning |
 |---|---|---|
 | Dev | `dev-parfymia.myshopify.com` | All utveckling och förhandsvisning |
-| Prod | `www.parfymia.com` | Live butik — pusha aldrig direkt hit |
+| Prod | `www.parfymia.com` (`6m05q1-6x.myshopify.com`) | Live butik — pusha aldrig direkt hit |
 
 ## Komma igång
 
