@@ -71,6 +71,23 @@ Salvia får inte användas som textfärg på tonad bakgrund; använd mörk salvi
 | H6 | 12 px |
 | Brödtext | 14 px |
 
+## Header
+
+Inställd i `sections/header-group.json`. Allt går att ändra i theme editor.
+
+| Del | Utformning |
+|---|---|
+| Annonsrad | Skog (scheme-5), versaler, 0.75 rem, löst teckenavstånd, 10 px luft över och under |
+| Övre rad | Sök till vänster, logotyp i mitten, land/språk, konto och varukorg till höger |
+| Nedre rad | Huvudmenyn centrerad: Inter 500, versaler, 0.75 rem, löst teckenavstånd |
+| Avgränsning | 1 px linje under headern, ingen linje mellan raderna |
+| Beteende | Fäst: visas när man skrollar uppåt |
+| Mobilmeny | Dragspel med avdelare, för ett brett sortiment med många underkategorier |
+
+Annonsradens text är Horizons platshållare ("Welcome to our store") och ska bytas mot butikens eget budskap.
+
+Menyns teckenavstånd är en egen inställning i menyblocket (`blocks/_header-menu.liquid`, "Letter spacing"), tillagd för Parfymia.
+
 ## Logotyp
 
 `Logga_Parfymia_sm.png` — höjd 36 px desktop, 28 px mobil. Samma fil används för ljus och mörk bakgrund. En inverterad (ljus) variant behövs för schema 5 och 6 och laddas upp i theme editor → Logo.

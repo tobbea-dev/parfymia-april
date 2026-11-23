@@ -7,9 +7,9 @@ description: Ta skärmdumpar av Parfymia-temat i tre bredder (mobil, surfplatta,
 
 ## 1. Skaffa en preview-URL
 
-- Lokalt: `shopify theme dev --store=dev-parfymia.myshopify.com` → `http://127.0.0.1:9292`.
+- Lokalt: `shopify theme dev --store=devparfymia.myshopify.com` → `http://127.0.0.1:9292`.
 - Annars: pusha som opublicerat tema och använd preview-länken som CLI:t skriver ut:
-  `shopify theme push --store=dev-parfymia.myshopify.com --unpublished --theme="Parfymia WIP"`
+  `shopify theme push --store=devparfymia.myshopify.com --unpublished --theme="Parfymia WIP"`
 - Aldrig live-storen.
 
 Nås inte dev-storen från sessionen (molnmiljö utan nätverksåtkomst, lösenordsskydd, ingen inloggning): **säg det rakt ut** och be om åtkomst eller skärmdumpar. Hitta inte på hur sidan ser ut.
