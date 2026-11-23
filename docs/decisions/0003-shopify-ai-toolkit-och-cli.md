@@ -30,7 +30,7 @@ Shopify-kopplingen i Claude (connectorn, verktygen `mcp__Shopify__*`) ska **inte
   2. `theme-kit-access.shopifyapps.com` och butikens adress tillåtna i miljöns nätverk.
   3. CLI:t styrt genom proxyn: `SHOPIFY_HTTP_PROXY` och `SHOPIFY_HTTPS_PROXY` satta till värdet i `HTTPS_PROXY`, samt `NODE_USE_ENV_PROXY=1` och `NODE_EXTRA_CA_CERTS=/root/.ccr/ca-bundle.crt`. Utan dem misslyckas CLI:t med `ENOTFOUND`.
 - **Förhandsgranskning i molnet fungerar inte än.** Dev-butikens skyltfönster är lösenordsskyddat, så förhandsgranskningslänken leder till lösenordssidan. Skärmdumpar kräver att skyddet stängs av på dev-butiken eller att lösenordet sparas i miljön.
-- **Nätverk.** I miljön `parfymia-april` nås dev-butiken, Shopifys CDN och sedan 2026-11-12 `shopify.dev`. `accounts.shopify.com`, `admin.shopify.com`, `partners.shopify.com`, `dev.shopify.com` och `theme-kit-access.shopifyapps.com` nås inte.
+- **Nätverk.** I miljön `parfymia-april` nås dev-butiken, Shopifys CDN, sedan 2026-11-12 `shopify.dev` och sedan 2026-11-13 `theme-kit-access.shopifyapps.com`. `accounts.shopify.com`, `admin.shopify.com`, `partners.shopify.com` och `dev.shopify.com` nås inte.
 
 ## AI Toolkits dokumentsökning i molnsessioner
 
